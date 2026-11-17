@@ -1,0 +1,21 @@
+:root {
+  --bg-main: #FFF8E7;
+  --bg-card: #FFFFFF;
+  --text-main: #18181C;
+}
+
+html.dark {
+  --bg-main: #18181C;
+  --bg-card: #242429;
+  --text-main: #FFF8E7;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-card {
+  background-color: var(--bg-card);
+}
