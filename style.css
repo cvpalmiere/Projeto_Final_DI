@@ -4,16 +4,18 @@
   --text-main: #18181C;
   --brand-sangria: #930500;
   --brand-cornflower: #95BBEA;
-  --border-color: #95BBEA;
+  --charcoal: #18181C;
+  --cosmic: #FFF8E7;
 }
 
 html.dark {
   --bg-main: #18181C;
   --bg-card: #242429;
   --text-main: #FFF8E7;
-  --brand-sangria: #95BBEA;
-  --brand-cornflower: #930500;
-  --border-color: #95BBEA;
+  --brand-sangria: #930500;
+  --brand-cornflower: #95BBEA;
+  --charcoal: #18181C;
+  --cosmic: #FFF8E7;
 }
 
 html {
@@ -33,42 +35,28 @@ body {
 .custom-card {
   background-color: var(--bg-card);
   border: 2px solid var(--brand-cornflower);
-  border-radius: 0.75rem;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  border-radius: 1rem;
 }
 
 .custom-header {
-  border-bottom: 4px solid var(--brand-sangria);
+  border-bottom: 3px solid var(--brand-sangria);
   background-color: var(--bg-card);
 }
 
 .custom-footer {
-  border-top: 4px solid var(--brand-sangria);
+  border-top: 3px solid var(--brand-sangria);
   background-color: var(--bg-card);
 }
 
-.btn-primary {
-  background-color: var(--brand-sangria);
+.notebook-cover {
+  background: linear-gradient(135deg, #930500 0%, #242429 100%);
   color: #FFF8E7;
-  font-weight: 700;
-  border-radius: 0.5rem;
-  transition: opacity 0.2s ease;
+  border-left: 12px solid #95BBEA;
 }
 
-.btn-primary:hover {
-  opacity: 0.9;
-}
-
-.input-styled {
-  border: 2px solid var(--brand-cornflower);
-  background-color: transparent;
-  border-radius: 0.5rem;
-  outline: none;
-  font-weight: 500;
-}
-
-.input-styled:focus {
-  border-color: var(--brand-sangria);
+.ruled-page {
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 24px, #95BBEA 24px, #95BBEA 25px);
+  background-size: 100% 25px;
 }
 
 *:focus-visible {
@@ -76,10 +64,6 @@ body {
   outline-offset: 3px;
 }
 
-input, select, textarea {
+input, select {
   color: inherit;
-}
-
-input::placeholder, textarea::placeholder {
-  opacity: 0.6;
 }
