@@ -25,11 +25,11 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <header class="border-b border-cornflower/30 py-4 px-6 flex flex-wrap items-center justify-between gap-4">
+  <header class="border-b-2 border-sangria py-4 px-6 flex flex-wrap items-center justify-between gap-4">
     <div class="flex items-center gap-3">
-      <h1 class="text-xl font-bold text-sangria dark:text-cornflower">Mochila Inteligente</h1>
+      <h1 class="text-xl font-extrabold text-sangria dark:text-cornflower">Mochila Inteligente</h1>
     </div>
-    <div class="flex items-center gap-2 bg-cornflower/20 px-3 py-1.5 rounded-lg">
+    <div class="flex items-center gap-2 bg-cornflower/20 px-3 py-1.5 rounded border border-cornflower">
       <span class="text-xs font-bold mr-1">Fonte</span>
       <button onclick="changeFontSize(-1)" class="px-2 py-0.5 bg-carddark text-white rounded font-bold text-xs hover:bg-sangria">Diminuir</button>
       <button onclick="changeFontSize(0)" class="px-2 py-0.5 bg-carddark text-white rounded font-bold text-xs hover:bg-sangria">Normal</button>
@@ -40,32 +40,24 @@
 
   <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
     
-    <section class="mb-10 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="max-w-xl">
-        <span class="inline-block bg-cornflower text-charcoal text-xs font-bold px-3 py-1 rounded-full mb-3">Plataforma Academica</span>
-        <h2 class="text-3xl md:text-4xl font-extrabold text-sangria dark:text-cornflower mb-4">Todo o semestre em uma unica mochila digital</h2>
-        <p class="text-base opacity-90 mb-6">Cadastre suas materias e cadernos por semestre, acompanhe seu progresso e mantenha sua organizacao impecavel.</p>
-        <button onclick="scrollToApp()" class="bg-sangria text-cosmic font-bold px-6 py-3 rounded-xl shadow hover:opacity-90">Ir Para o Cadastro</button>
-      </div>
-      <div class="custom-card p-6 rounded-2xl shadow-lg border border-cornflower/40 w-full md:w-80">
-        <h3 class="font-bold text-lg mb-2 text-sangria dark:text-cornflower">Painel de Controle</h3>
-        <p class="text-sm opacity-80 mb-4">Gerencie seu material academico de forma totalmente dinamica.</p>
-        <div id="counter-box" class="bg-cornflower/20 p-3 rounded-lg text-center font-bold text-sm">0 Itens Cadastrados</div>
-      </div>
+    <section class="mb-8 text-center md:text-left border-b border-cornflower/30 pb-8">
+      <span class="inline-block bg-cornflower text-charcoal text-xs font-bold px-3 py-1 rounded mb-3">Ambiente Academico</span>
+      <h2 class="text-3xl md:text-4xl font-black text-sangria dark:text-cornflower mb-3">Gerenciamento de semestres e cadernos</h2>
+      <p class="text-base opacity-90">Cadastre suas materias e cadernos organizados por semestre de forma objetiva e limpa.</p>
     </section>
 
-    <div id="app-section" class="space-y-8">
+    <div class="space-y-8">
       
-      <div class="custom-card p-6 rounded-2xl shadow-md border border-cornflower/30">
-        <h3 class="text-xl font-bold mb-4 text-sangria dark:text-cornflower">Novo Cadastro Academico</h3>
+      <div class="custom-card p-6 rounded border-2 border-cornflower">
+        <h3 class="text-xl font-bold mb-4 text-sangria dark:text-cornflower">Novo Registro no Sistema</h3>
         <form onsubmit="handleItemSubmit(event)" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
           <div>
             <label class="block text-xs font-bold mb-1">Nome do Item</label>
-            <input type="text" id="item-nome" required placeholder="Ex: Banco de Dados" class="w-full px-3 py-2 rounded-lg border border-cornflower bg-transparent outline-none text-sm">
+            <input type="text" id="item-nome" required placeholder="Ex: Arquitetura de Software" class="w-full px-3 py-2 rounded border-2 border-cornflower bg-transparent outline-none text-sm font-medium">
           </div>
           <div>
             <label class="block text-xs font-bold mb-1">Semestre</label>
-            <select id="item-semestre" class="w-full px-3 py-2 rounded-lg border border-cornflower bg-transparent outline-none text-sm">
+            <select id="item-semestre" class="w-full px-3 py-2 rounded border-2 border-cornflower bg-transparent outline-none text-sm font-medium">
               <option value="1 Semestre" class="bg-carddark text-white">1 Semestre</option>
               <option value="2 Semestre" class="bg-carddark text-white">2 Semestre</option>
               <option value="3 Semestre" class="bg-carddark text-white">3 Semestre</option>
@@ -79,31 +71,49 @@
             </select>
           </div>
           <div>
-            <label class="block text-xs font-bold mb-1">Tipo de Cadastro</label>
-            <select id="item-tipo" class="w-full px-3 py-2 rounded-lg border border-cornflower bg-transparent outline-none text-sm">
-              <option value="Materia" class="bg-carddark text-white">Cadastrar Materia</option>
-              <option value="Caderno" class="bg-carddark text-white">Cadastrar Caderno</option>
+            <label class="block text-xs font-bold mb-1">Categoria</label>
+            <select id="item-tipo" class="w-full px-3 py-2 rounded border-2 border-cornflower bg-transparent outline-none text-sm font-medium">
+              <option value="Materia" class="bg-carddark text-white">Materia</option>
+              <option value="Caderno" class="bg-carddark text-white">Caderno</option>
             </select>
           </div>
           <div>
-            <button type="submit" class="w-full bg-sangria text-cosmic font-bold px-4 py-2.5 rounded-lg shadow hover:opacity-90 text-sm">Cadastrar</button>
+            <button type="submit" class="w-full bg-sangria text-cosmic font-bold px-4 py-2.5 rounded shadow hover:opacity-90 text-sm">Adicionar</button>
           </div>
         </form>
       </div>
 
       <div>
-        <h3 class="text-2xl font-bold mb-4">Itens Cadastrados</h3>
+        <div class="flex flex-wrap gap-2 mb-6 border-b border-cornflower/30 pb-4" id="semesters-nav">
+          <button onclick="filterSemester('todos')" class="px-4 py-2 rounded bg-sangria text-cosmic font-bold text-xs uppercase">Todos</button>
+          <button onclick="filterSemester('1 Semestre')" class="px-3 py-2 rounded custom-card border border-cornflower font-bold text-xs">1 Semestre</button>
+          <button onclick="filterSemester('2 Semestre')" class="px-3 py-2 rounded custom-card border border-cornflower font-bold text-xs">2 Semestre</button>
+          <button onclick="filterSemester('3 Semestre')" class="px-3 py-2 rounded custom-card border border-cornflower font-bold text-xs">3 Semestre</button>
+          <button onclick="filterSemester('4 Semestre')" class="px-3 py-2 rounded custom-card border border-cornflower font-bold text-xs">4 Semestre</button>
+          <button onclick="filterSemester('5 Semestre')" class="px-3 py-2 rounded custom-card border border-cornflower font-bold text-xs">5 Semestre</button>
+          <button onclick="filterSemester('6 Semestre')" class="px-3 py-2 rounded custom-card border border-cornflower font-bold text-xs">6 Semestre</button>
+          <button onclick="filterSemester('7 Semestre')" class="px-3 py-2 rounded custom-card border border-cornflower font-bold text-xs">7 Semestre</button>
+          <button onclick="filterSemester('8 Semestre')" class="px-3 py-2 rounded custom-card border border-cornflower font-bold text-xs">8 Semestre</button>
+          <button onclick="filterSemester('9 Semestre')" class="px-3 py-2 rounded custom-card border border-cornflower font-bold text-xs">9 Semestre</button>
+          <button onclick="filterSemester('10 Semestre')" class="px-3 py-2 rounded custom-card border border-cornflower font-bold text-xs">10 Semestre</button>
+        </div>
+
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold">Listagem de Registros</h3>
+          <span id="counter-box" class="text-xs font-bold bg-cornflower/20 px-3 py-1 rounded border border-cornflower">0 Itens</span>
+        </div>
+
         <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         </div>
-        <p id="empty-msg" class="text-sm opacity-60 text-center py-8">Nenhum item cadastrado ainda. Utilize o formulario acima.</p>
+        <p id="empty-msg" class="text-sm opacity-60 text-center py-12 border border-dashed border-cornflower rounded">Nenhum registro encontrado para este filtro.</p>
       </div>
 
     </div>
 
   </main>
 
-  <footer class="border-t border-cornflower/30 py-6 px-6 text-center text-xs opacity-80 mt-12">
-    <p>Carla Vicktoria de Almeida Santana Palmiere | RA 22606839</p>
+  <footer class="border-t-2 border-sangria py-6 px-6 text-center text-xs font-bold mt-12">
+    <p>Mochila Inteligente | Plataforma Academica Institucional</p>
     <p class="mt-1">Desenvolvimento de Interfaces 2026 | Padrao WCAG AAA</p>
   </footer>
 

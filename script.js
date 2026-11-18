@@ -1,5 +1,6 @@
 let currentFontSize = 16;
-let itemsList = JSON.parse(localStorage.getItem('mochila_items')) || [];
+let itemsList = JSON.parse(localStorage.getItem('mochila_items_v3')) || [];
+let activeFilter = 'todos';
 
 function changeFontSize(direction) {
   if (direction === 0) {
@@ -21,38 +22,45 @@ function toggleTheme() {
   }
 }
 
-function scrollToApp() {
-  document.getElementById('app-section').scrollIntoView({ behavior: 'smooth' });
-}
-
 function renderItems() {
   const grid = document.getElementById('cards-grid');
   const emptyMsg = document.getElementById('empty-msg');
   const counterBox = document.getElementById('counter-box');
   
   grid.innerHTML = '';
-  counterBox.textContent = itemsList.length + ' Itens Cadastrados';
+  
+  const filteredList = activeFilter === 'todos' 
+    ? itemsList 
+    : itemsList.filter(item => item.semestre === activeFilter);
 
-  if (itemsList.length === 0) {
+  counterBox.textContent = filteredList.length + ' Itens';
+
+  if (filteredList.length === 0) {
     emptyMsg.style.display = 'block';
     return;
   }
 
   emptyMsg.style.display = 'none';
 
-  itemsList.forEach((item, index) => {
+  filteredList.forEach((item, index) => {
+    const realIndex = itemsList.indexOf(item);
     const card = document.createElement('div');
-    card.className = 'custom-card p-5 rounded-xl shadow-md border border-cornflower/30 flex justify-between items-center';
+    card.className = 'custom-card p-5 rounded border-2 border-cornflower flex justify-between items-center';
     card.innerHTML = `
       <div>
-        <span class="inline-block bg-cornflower text-charcoal text-xs font-bold px-2 py-0.5 rounded mb-2">${item.tipo}</span>
+        <span class="inline-block bg-cornflower text-charcoal text-xs font-extrabold px-2 py-0.5 rounded mb-2">${item.tipo}</span>
         <h4 class="text-lg font-bold">${item.nome}</h4>
-        <p class="text-xs opacity-80 mt-1">${item.semestre}</p>
+        <p class="text-xs font-semibold opacity-80 mt-1">${item.semestre}</p>
       </div>
-      <button onclick="removeItem(${index})" class="text-xs bg-sangria text-cosmic px-3 py-1.5 rounded font-bold hover:opacity-80">Excluir</button>
+      <button onclick="removeItem(${realIndex})" class="text-xs bg-sangria text-cosmic px-3 py-1.5 rounded font-bold hover:opacity-80">Excluir</button>
     `;
     grid.appendChild(card);
   });
+}
+
+function filterSemester(semestre) {
+  activeFilter = semestre;
+  renderItems();
 }
 
 function handleItemSubmit(event) {
@@ -62,7 +70,7 @@ function handleItemSubmit(event) {
   const tipo = document.getElementById('item-tipo').value;
 
   itemsList.push({ nome, semestre, tipo });
-  localStorage.setItem('mochila_items', JSON.stringify(itemsList));
+  localStorage.setItem('mochila_items_v3', JSON.stringify(itemsList));
   
   document.getElementById('item-nome').value = '';
   renderItems();
@@ -70,7 +78,7 @@ function handleItemSubmit(event) {
 
 function removeItem(index) {
   itemsList.splice(index, 1);
-  localStorage.setItem('mochila_items', JSON.stringify(itemsList));
+  localStorage.setItem('mochila_items_v3', JSON.stringify(itemsList));
   renderItems();
 }
 
