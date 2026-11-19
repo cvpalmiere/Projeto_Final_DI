@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel | Mochila Inteligente</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cosmic: '#FFF8E7',
+            sangria: '#930500',
+            cornflower: '#95BBEA',
+            charcoal: '#18181C',
+            carddark: '#242429'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <header class="custom-header py-5 px-8 flex flex-wrap items-center justify-between gap-4 shadow-md">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-4 h-8 bg-sangria rounded-sm"></div>
+      <h1 class="text-2xl font-black text-sangria dark:text-cornflower tracking-tight">Mochila Inteligente</h1>
+    </a>
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-cornflower">
+        <button onclick="changeFontSize(-1)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Menor</button>
+        <button onclick="changeFontSize(0)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Padrao</button>
+        <button onclick="changeFontSize(1)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Maior</button>
+        <button onclick="toggleTheme()" class="ml-1 px-3 py-1 bg-sangria text-cosmic rounded font-bold text-xs hover:opacity-90 transition">Tema</button>
+      </div>
+      <a href="index.html" class="px-4 py-2 rounded-lg border-2 border-cornflower font-black text-xs uppercase tracking-wider hover:bg-cornflower hover:text-charcoal transition">Sair</a>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto px-6 py-10 max-w-6xl">
+    
+    <section class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b-2 border-cornflower/30 pb-6">
+      <div>
+        <span class="inline-block bg-cornflower text-charcoal text-xs font-black px-3 py-1 rounded mb-2 uppercase tracking-wider">Armario Digital</span>
+        <h2 class="text-3xl md:text-4xl font-black text-sangria dark:text-cornflower">Meus Cadernos e Materias</h2>
+      </div>
+      <span id="counter-box" class="text-xs font-black bg-cornflower/20 px-4 py-2 rounded-lg border-2 border-cornflower">0 Itens</span>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <div class="lg:col-span-1">
+        <div class="custom-card p-6 shadow-sm">
+          <h3 class="text-xl font-black mb-6 text-sangria dark:text-cornflower pb-3 border-b-2 border-cornflower/30">Novo Registro</h3>
+          <form onsubmit="handleItemSubmit(event)" class="space-y-5">
+            <div>
+              <label class="block text-xs font-black uppercase tracking-wider mb-2">Nome do Item</label>
+              <input type="text" id="item-nome" required placeholder="Ex: Arquitetura de Software" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+            </div>
+            <div>
+              <label class="block text-xs font-black uppercase tracking-wider mb-2">Semestre</label>
+              <select id="item-semestre" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+                <option value="1 Semestre" class="bg-charcoal text-cosmic">1 Semestre</option>
+                <option value="2 Semestre" class="bg-charcoal text-cosmic">2 Semestre</option>
+                <option value="3 Semestre" class="bg-charcoal text-cosmic">3 Semestre</option>
+                <option value="4 Semestre" class="bg-charcoal text-cosmic">4 Semestre</option>
+                <option value="5 Semestre" class="bg-charcoal text-cosmic">5 Semestre</option>
+                <option value="6 Semestre" class="bg-charcoal text-cosmic">6 Semestre</option>
+                <option value="7 Semestre" class="bg-charcoal text-cosmic">7 Semestre</option>
+                <option value="8 Semestre" class="bg-charcoal text-cosmic">8 Semestre</option>
+                <option value="9 Semestre" class="bg-charcoal text-cosmic">9 Semestre</option>
+                <option value="10 Semestre" class="bg-charcoal text-cosmic">10 Semestre</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-black uppercase tracking-wider mb-2">Tipo</label>
+              <select id="item-tipo" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+                <option value="Materia" class="bg-charcoal text-cosmic">Materia</option>
+                <option value="Caderno" class="bg-charcoal text-cosmic">Caderno</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-black uppercase tracking-wider mb-2">Estilo de Folha</label>
+              <select id="item-pauta" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+                <option value="Com pauta" class="bg-charcoal text-cosmic">Com pauta</option>
+                <option value="Sem pauta" class="bg-charcoal text-cosmic">Sem pauta</option>
+                <option value="Quadriculado" class="bg-charcoal text-cosmic">Quadriculado</option>
+                <option value="Pontilhado" class="bg-charcoal text-cosmic">Pontilhado</option>
+              </select>
+            </div>
+            <button type="submit" class="w-full bg-sangria text-cosmic font-black py-3 px-4 rounded-lg shadow hover:opacity-90 transition uppercase tracking-wider text-sm">Adicionar Caderno</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2 space-y-6">
+        <div class="custom-card p-6 shadow-sm">
+          <h3 class="text-sm font-black uppercase tracking-wider mb-4 text-sangria dark:text-cornflower">Filtrar por Semestre</h3>
+          <div class="flex flex-wrap gap-2" id="semesters-nav">
+            <button onclick="filterSemester('todos')" class="px-3.5 py-2 rounded-lg bg-sangria text-cosmic font-black text-xs uppercase tracking-wider shadow">Todos</button>
+            <button onclick="filterSemester('1 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">1 Semestre</button>
+            <button onclick="filterSemester('2 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">2 Semestre</button>
+            <button onclick="filterSemester('3 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">3 Semestre</button>
+            <button onclick="filterSemester('4 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">4 Semestre</button>
+            <button onclick="filterSemester('5 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">5 Semestre</button>
+            <button onclick="filterSemester('6 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">6 Semestre</button>
+            <button onclick="filterSemester('7 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">7 Semestre</button>
+            <button onclick="filterSemester('8 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">8 Semestre</button>
+            <button onclick="filterSemester('9 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">9 Semestre</button>
+            <button onclick="filterSemester('10 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">10 Semestre</button>
+          </div>
+        </div>
+
+        <div class="custom-card p-6 shadow-sm">
+          <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          </div>
+          <p id="empty-msg" class="text-sm font-semibold opacity-60 text-center py-12 border-2 border-dashed border-cornflower rounded-lg">Nenhum caderno encontrado neste semestre.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="custom-footer py-6 px-8 text-center text-xs font-black uppercase tracking-wider mt-12">
+    <p>Mochila Inteligente | Plataforma Academica Institucional</p>
+    <p class="mt-1">Desenvolvimento de Interfaces 2026 | Padrao WCAG AAA</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar | Mochila Inteligente</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cosmic: '#FFF8E7',
+            sangria: '#930500',
+            cornflower: '#95BBEA',
+            charcoal: '#18181C',
+            carddark: '#242429'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <header class="custom-header py-5 px-8 flex flex-wrap items-center justify-between gap-4 shadow-md">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-4 h-8 bg-sangria rounded-sm"></div>
+      <h1 class="text-2xl font-black text-sangria dark:text-cornflower tracking-tight">Mochila Inteligente</h1>
+    </a>
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-cornflower">
+        <button onclick="changeFontSize(-1)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Menor</button>
+        <button onclick="changeFontSize(0)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Padrao</button>
+        <button onclick="changeFontSize(1)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Maior</button>
+        <button onclick="toggleTheme()" class="ml-1 px-3 py-1 bg-sangria text-cosmic rounded font-bold text-xs hover:opacity-90 transition">Tema</button>
+      </div>
+      <a href="index.html" class="px-4 py-2 rounded-lg border-2 border-cornflower font-black text-xs uppercase tracking-wider hover:bg-cornflower hover:text-charcoal transition">Inicio</a>
+    </div>
+  </header>
+
+  <main class="flex-grow flex items-center justify-center px-6 py-12">
+    <div class="custom-card p-8 md:p-10 w-full max-w-md shadow-xl">
+      <span class="inline-block bg-cornflower text-charcoal text-xs font-black px-3 py-1 rounded mb-4 uppercase tracking-wider">Acesso ao Armario</span>
+      <h2 class="text-3xl font-black text-sangria dark:text-cornflower mb-2">Entrar na conta</h2>
+      <p class="text-sm opacity-80 mb-8">Informe suas credenciais para abrir seus semestres e cadernos digitais.</p>
+
+      <form onsubmit="handleLogin(event)" class="space-y-5">
+        <div>
+          <label for="login-email" class="block text-xs font-black uppercase tracking-wider mb-2">Email Academico</label>
+          <input type="email" id="login-email" required placeholder="estudante@instituicao.edu.br" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+        </div>
+        <div>
+          <label for="login-senha" class="block text-xs font-black uppercase tracking-wider mb-2">Senha</label>
+          <input type="password" id="login-senha" required placeholder="Digite sua senha" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+        </div>
+        <button type="submit" class="w-full bg-sangria text-cosmic font-black py-3.5 px-4 rounded-lg shadow hover:opacity-90 transition uppercase tracking-wider text-sm">Acessar Painel</button>
+      </form>
+
+      <div class="mt-6 pt-6 border-t-2 border-cornflower/30 text-center">
+        <a href="dashboard.html" class="text-xs font-black uppercase tracking-wider text-sangria dark:text-cornflower hover:underline">Entrar como visitante no painel</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="custom-footer py-6 px-8 text-center text-xs font-black uppercase tracking-wider">
+    <p>Mochila Inteligente | Plataforma Academica Institucional</p>
+    <p class="mt-1">Desenvolvimento de Interfaces 2026 | Padrao WCAG AAA</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

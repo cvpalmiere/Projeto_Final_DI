@@ -1,9 +1,19 @@
-let currentFontSize = 16;
-let itemsList = JSON.parse(localStorage.getItem('mochila_items_v4')) || [
+let currentFontSize = parseInt(localStorage.getItem('mochila_font')) || 16;
+let itemsList = JSON.parse(localStorage.getItem('mochila_items_v5')) || [
   { nome: "Banco de Dados", semestre: "2 Semestre", tipo: "Caderno", pauta: "Com pauta" },
   { nome: "Engenharia de Software", semestre: "3 Semestre", tipo: "Materia", pauta: "Sem pauta" }
 ];
 let activeFilter = 'todos';
+
+function applySavedPreferences() {
+  const savedTheme = localStorage.getItem('mochila_theme');
+  if (savedTheme === 'light') {
+    document.documentElement.classList.remove('dark');
+  } else {
+    document.documentElement.classList.add('dark');
+  }
+  document.documentElement.style.fontSize = currentFontSize + 'px';
+}
 
 function changeFontSize(direction) {
   if (direction === 0) {
@@ -13,6 +23,7 @@ function changeFontSize(direction) {
   } else if (direction === -1 && currentFontSize > 14) {
     currentFontSize -= 2;
   }
+  localStorage.setItem('mochila_font', currentFontSize);
   document.documentElement.style.fontSize = currentFontSize + 'px';
 }
 
@@ -20,8 +31,28 @@ function toggleTheme() {
   const htmlEl = document.documentElement;
   if (htmlEl.classList.contains('dark')) {
     htmlEl.classList.remove('dark');
+    localStorage.setItem('mochila_theme', 'light');
   } else {
     htmlEl.classList.add('dark');
+    localStorage.setItem('mochila_theme', 'dark');
+  }
+}
+
+function toggleFaq(button) {
+  const answer = button.nextElementSibling;
+  if (answer.classList.contains('hidden')) {
+    answer.classList.remove('hidden');
+  } else {
+    answer.classList.add('hidden');
+  }
+}
+
+function handleLogin(event) {
+  event.preventDefault();
+  const emailInput = document.getElementById('login-email');
+  if (emailInput && emailInput.value.trim() !== '') {
+    localStorage.setItem('mochila_user', emailInput.value.trim());
+    window.location.href = 'dashboard.html';
   }
 }
 
@@ -49,7 +80,7 @@ function renderItems() {
 
   if (emptyMsg) emptyMsg.style.display = 'none';
 
-  filteredList.forEach((item, index) => {
+  filteredList.forEach((item) => {
     const realIndex = itemsList.indexOf(item);
     const card = document.createElement('div');
     card.className = 'notebook-cover p-6 rounded-xl shadow-md flex flex-col justify-between relative overflow-hidden';
@@ -82,7 +113,7 @@ function handleItemSubmit(event) {
   const pauta = document.getElementById('item-pauta').value;
 
   itemsList.push({ nome, semestre, tipo, pauta });
-  localStorage.setItem('mochila_items_v4', JSON.stringify(itemsList));
+  localStorage.setItem('mochila_items_v5', JSON.stringify(itemsList));
   
   document.getElementById('item-nome').value = '';
   renderItems();
@@ -90,8 +121,9 @@ function handleItemSubmit(event) {
 
 function removeItem(index) {
   itemsList.splice(index, 1);
-  localStorage.setItem('mochila_items_v4', JSON.stringify(itemsList));
+  localStorage.setItem('mochila_items_v5', JSON.stringify(itemsList));
   renderItems();
 }
 
+applySavedPreferences();
 renderItems();

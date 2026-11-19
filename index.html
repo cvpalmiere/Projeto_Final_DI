@@ -5,134 +5,162 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mochila Inteligente</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cosmic: '#FFF8E7',
+            sangria: '#930500',
+            cornflower: '#95BBEA',
+            charcoal: '#18181C',
+            carddark: '#242429'
+          }
+        }
+      }
+    }
+  </script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="min-h-screen flex flex-col">
 
   <header class="custom-header py-5 px-8 flex flex-wrap items-center justify-between gap-4 shadow-md">
-    <div class="flex items-center gap-3">
+    <a href="index.html" class="flex items-center gap-3">
       <div class="w-4 h-8 bg-sangria rounded-sm"></div>
-      <h1 class="text-2xl font-black text-sangria tracking-tight">Mochila Inteligente</h1>
-    </div>
+      <h1 class="text-2xl font-black text-sangria dark:text-cornflower tracking-tight">Mochila Inteligente</h1>
+    </a>
     <nav class="hidden md:flex items-center gap-6 text-sm font-bold">
-      <a href="#" class="hover:text-sangria transition">Recursos</a>
-      <a href="#" class="hover:text-sangria transition">Folhas</a>
-      <a href="#" class="hover:text-sangria transition">Duvidas</a>
+      <a href="#recursos" class="hover:text-sangria dark:hover:text-cornflower transition">Recursos</a>
+      <a href="#folhas" class="hover:text-sangria dark:hover:text-cornflower transition">Folhas</a>
+      <a href="#duvidas" class="hover:text-sangria dark:hover:text-cornflower transition">Duvidas</a>
     </nav>
-    <div class="flex items-center gap-3 px-4 py-2 rounded-lg border-2 border-cornflower bg-card">
-      <span class="text-xs font-black uppercase tracking-wider">Acessibilidade</span>
-      <button onclick="changeFontSize(-1)" class="px-2.5 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">A</button>
-      <button onclick="changeFontSize(0)" class="px-2.5 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">A</button>
-      <button onclick="changeFontSize(1)" class="px-2.5 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">A</button>
-      <button onclick="toggleTheme()" class="ml-2 px-3 py-1 bg-sangria text-cosmic rounded font-bold text-xs hover:opacity-90 transition">Tema</button>
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-cornflower">
+        <button onclick="changeFontSize(-1)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Menor</button>
+        <button onclick="changeFontSize(0)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Padrao</button>
+        <button onclick="changeFontSize(1)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Maior</button>
+        <button onclick="toggleTheme()" class="ml-1 px-3 py-1 bg-sangria text-cosmic rounded font-bold text-xs hover:opacity-90 transition">Tema</button>
+      </div>
+      <a href="login.html" class="px-4 py-2 rounded-lg border-2 border-cornflower font-black text-xs uppercase tracking-wider hover:bg-cornflower hover:text-charcoal transition">Entrar</a>
+      <a href="dashboard.html" class="px-4 py-2 rounded-lg bg-sangria text-cosmic font-black text-xs uppercase tracking-wider hover:opacity-90 transition">Abrir Mochila</a>
     </div>
   </header>
 
-  <main class="flex-grow container mx-auto px-6 py-10 max-w-6xl">
-    
-    <section class="mb-12 p-10 rounded-2xl border-2 border-cornflower custom-card shadow-lg flex flex-col md:flex-row justify-between items-center gap-8">
-      <div class="max-w-2xl">
-        <span class="inline-block bg-cornflower text-charcoal text-xs font-black px-3 py-1 rounded mb-4 uppercase tracking-wider">Caderno digital de verdade</span>
-        <h2 class="text-4xl md:text-6xl font-black text-sangria mb-4 leading-tight">O caderno digital que respeita a linha.</h2>
-        <p class="text-base font-medium opacity-90 mb-6">Escreva, cole notas adesivas e organize suas materias com pauta de verdade, alinhamento milimetrico e rolagem infinita.</p>
-        <div class="flex gap-4">
-          <button onclick="document.getElementById('item-nome').focus()" class="bg-sangria text-cosmic font-black px-6 py-3 rounded-xl shadow hover:opacity-90 transition uppercase tracking-wider text-sm">Criar caderno</button>
+  <main class="flex-grow container mx-auto px-6 py-12 max-w-6xl space-y-16">
+
+    <section class="p-10 rounded-2xl custom-card shadow-lg flex flex-col md:flex-row justify-between items-center gap-10">
+      <div class="max-w-xl">
+        <span class="inline-block bg-cornflower text-charcoal text-xs font-black px-3 py-1 rounded mb-4 uppercase tracking-wider">Caderno Digital Academico</span>
+        <h2 class="text-4xl md:text-6xl font-black text-sangria dark:text-cornflower mb-4 leading-tight">O caderno digital que respeita a linha.</h2>
+        <p class="text-base font-medium opacity-90 mb-8">Escreva, cole notas adesivas e organize suas materias com pauta de verdade. O texto assenta na linha e nada flutua.</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="login.html" class="bg-sangria text-cosmic font-black px-6 py-3 rounded-xl shadow hover:opacity-90 transition uppercase tracking-wider text-sm">Comecar Agora</a>
+          <a href="dashboard.html" class="border-2 border-cornflower font-black px-6 py-3 rounded-xl hover:bg-cornflower hover:text-charcoal transition uppercase tracking-wider text-sm">Ver Painel</a>
         </div>
       </div>
-      <div class="w-full md:w-96 p-6 rounded-xl notebook-cover shadow-2xl ruled-page min-h-[220px] flex flex-col justify-between">
+      <div class="w-full md:w-96 p-6 rounded-xl notebook-cover shadow-2xl ruled-page min-h-[240px] flex flex-col justify-between">
         <div class="flex justify-between items-center">
-          <span class="text-xs font-black uppercase bg-cornflower text-charcoal px-2 py-0.5 rounded">Ativo</span>
-          <div class="flex gap-1">
-            <div class="w-2.5 h-2.5 rounded-full bg-sangria"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-cornflower"></div>
+          <span class="text-xs font-black uppercase bg-cornflower text-charcoal px-2 py-0.5 rounded">Pauta Travada</span>
+          <div class="flex gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-sangria"></div>
+            <div class="w-3 h-3 rounded-full bg-cornflower"></div>
           </div>
         </div>
-        <p class="text-sm font-bold opacity-90 mt-4">Estudar fica mais leve quando o texto assenta sobre a pauta.</p>
+        <p class="text-sm font-bold opacity-95 mt-4 leading-relaxed">Estudar fica mais leve quando o texto assenta sobre a linha. Sem rolagem infinita e sem formatacao quebrada.</p>
       </div>
     </section>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      
-      <div class="lg:col-span-1">
-        <div class="custom-card p-6 rounded-xl border-2 border-cornflower shadow-sm">
-          <h3 class="text-xl font-black mb-6 text-sangria pb-3 border-b-2 border-cornflower/30">Novo Registro</h3>
-          <form onsubmit="handleItemSubmit(event)" class="space-y-5">
-            <div>
-              <label class="block text-xs font-black uppercase tracking-wider mb-2">Nome do Item</label>
-              <input type="text" id="item-nome" required placeholder="Ex: Arquitetura de Software" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
-            </div>
-            <div>
-              <label class="block text-xs font-black uppercase tracking-wider mb-2">Semestre</label>
-              <select id="item-semestre" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
-                <option value="1 Semestre" class="bg-charcoal text-cosmic">1 Semestre</option>
-                <option value="2 Semestre" class="bg-charcoal text-cosmic">2 Semestre</option>
-                <option value="3 Semestre" class="bg-charcoal text-cosmic">3 Semestre</option>
-                <option value="4 Semestre" class="bg-charcoal text-cosmic">4 Semestre</option>
-                <option value="5 Semestre" class="bg-charcoal text-cosmic">5 Semestre</option>
-                <option value="6 Semestre" class="bg-charcoal text-cosmic">6 Semestre</option>
-                <option value="7 Semestre" class="bg-charcoal text-cosmic">7 Semestre</option>
-                <option value="8 Semestre" class="bg-charcoal text-cosmic">8 Semestre</option>
-                <option value="9 Semestre" class="bg-charcoal text-cosmic">9 Semestre</option>
-                <option value="10 Semestre" class="bg-charcoal text-cosmic">10 Semestre</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-black uppercase tracking-wider mb-2">Tipo</label>
-              <select id="item-tipo" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
-                <option value="Materia" class="bg-charcoal text-cosmic">Materia</option>
-                <option value="Caderno" class="bg-charcoal text-cosmic">Caderno</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-black uppercase tracking-wider mb-2">Estilo de Folha</label>
-              <select id="item-pauta" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
-                <option value="Com pauta" class="bg-charcoal text-cosmic">Com pauta</option>
-                <option value="Sem pauta" class="bg-charcoal text-cosmic">Sem pauta</option>
-                <option value="Quadriculado" class="bg-charcoal text-cosmic">Quadriculado</option>
-                <option value="Pontilhado" class="bg-charcoal text-cosmic">Pontilhado</option>
-              </select>
-            </div>
-            <button type="submit" class="w-full bg-sangria text-cosmic font-black py-3 px-4 rounded-lg shadow hover:opacity-90 transition uppercase tracking-wider text-sm">Adicionar Caderno</button>
-          </form>
+    <section id="recursos">
+      <h3 class="text-3xl font-black text-sangria dark:text-cornflower mb-8">Feito para quem estuda no papel e no digital.</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="custom-card p-6">
+          <span class="inline-block bg-cornflower text-charcoal text-xs font-black px-2.5 py-1 rounded mb-4">01</span>
+          <h4 class="text-lg font-black mb-2">Alinhamento Milimetrico</h4>
+          <p class="text-sm opacity-85">Espaco entre linhas fixo e texto sempre sobre a linha de base em qualquer tamanho de fonte.</p>
+        </div>
+        <div class="custom-card p-6">
+          <span class="inline-block bg-cornflower text-charcoal text-xs font-black px-2.5 py-1 rounded mb-4">02</span>
+          <h4 class="text-lg font-black mb-2">Notas Sem Colisao</h4>
+          <p class="text-sm opacity-85">Anotacoes e imagens encaixam na pauta e o texto recua automaticamente ao redor.</p>
+        </div>
+        <div class="custom-card p-6">
+          <span class="inline-block bg-cornflower text-charcoal text-xs font-black px-2.5 py-1 rounded mb-4">03</span>
+          <h4 class="text-lg font-black mb-2">Paginas de Verdade</h4>
+          <p class="text-sm opacity-85">Navegue pagina a pagina com divisao clara por semestres e materias do curso.</p>
+        </div>
+        <div class="custom-card p-6">
+          <span class="inline-block bg-cornflower text-charcoal text-xs font-black px-2.5 py-1 rounded mb-4">04</span>
+          <h4 class="text-lg font-black mb-2">Exportacao Limpa</h4>
+          <p class="text-sm opacity-85">Organize seus cadernos com contraste de alto nivel pronto para leitura e impressao.</p>
         </div>
       </div>
+    </section>
 
-      <div class="lg:col-span-2 space-y-6">
-        <div class="custom-card p-6 rounded-xl border-2 border-cornflower shadow-sm">
-          <h3 class="text-sm font-black uppercase tracking-wider mb-4 text-sangria">Filtrar por Semestre</h3>
-          <div class="flex flex-wrap gap-2" id="semesters-nav">
-            <button onclick="filterSemester('todos')" class="px-3.5 py-2 rounded-lg bg-sangria text-cosmic font-black text-xs uppercase tracking-wider shadow">Todos</button>
-            <button onclick="filterSemester('1 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">1 Semestre</button>
-            <button onclick="filterSemester('2 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">2 Semestre</button>
-            <button onclick="filterSemester('3 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">3 Semestre</button>
-            <button onclick="filterSemester('4 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">4 Semestre</button>
-            <button onclick="filterSemester('5 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">5 Semestre</button>
-            <button onclick="filterSemester('6 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">6 Semestre</button>
-            <button onclick="filterSemester('7 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">7 Semestre</button>
-            <button onclick="filterSemester('8 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">8 Semestre</button>
-            <button onclick="filterSemester('9 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">9 Semestre</button>
-            <button onclick="filterSemester('10 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower/20 transition">10 Semestre</button>
-          </div>
+    <section id="folhas">
+      <h3 class="text-3xl font-black text-sangria dark:text-cornflower mb-8">Escolha a folha para cada materia.</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="custom-card p-5 flex flex-col justify-between">
+          <div class="h-36 rounded-lg border border-cornflower ruled-page mb-4"></div>
+          <h4 class="font-black text-base">Com pauta</h4>
+          <p class="text-xs opacity-80 mt-1">Linhas horizontais tradicionais para anotacoes corridas.</p>
         </div>
-
-        <div class="custom-card p-6 rounded-xl border-2 border-cornflower shadow-sm">
-          <div class="flex justify-between items-center mb-6 pb-3 border-b-2 border-cornflower/30">
-            <h3 class="text-xl font-black text-sangria">Meus Cadernos e Materias</h3>
-            <span id="counter-box" class="text-xs font-black bg-cornflower/20 px-3 py-1.5 rounded-lg border-2 border-cornflower">0 Itens</span>
-          </div>
-
-          <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          </div>
-          <p id="empty-msg" class="text-sm font-semibold opacity-60 text-center py-12 border-2 border-dashed border-cornflower rounded-lg">Nenhum caderno encontrado neste semestre.</p>
+        <div class="custom-card p-5 flex flex-col justify-between">
+          <div class="h-36 rounded-lg border border-cornflower mb-4"></div>
+          <h4 class="font-black text-base">Sem pauta</h4>
+          <p class="text-xs opacity-80 mt-1">Folha lisa para esquemas livres e mapas mentais.</p>
+        </div>
+        <div class="custom-card p-5 flex flex-col justify-between">
+          <div class="h-36 rounded-lg border border-cornflower grid-page mb-4"></div>
+          <h4 class="font-black text-base">Quadriculado</h4>
+          <p class="text-xs opacity-80 mt-1">Ideal para graficos, tabelas e calculos exatos.</p>
+        </div>
+        <div class="custom-card p-5 flex flex-col justify-between">
+          <div class="h-36 rounded-lg border border-cornflower dotted-page mb-4"></div>
+          <h4 class="font-black text-base">Pontilhado</h4>
+          <p class="text-xs opacity-80 mt-1">Guia discreta para desenhar diagramas e planejar.</p>
         </div>
       </div>
+    </section>
 
-    </div>
+    <section id="duvidas" class="max-w-3xl mx-auto">
+      <h3 class="text-3xl font-black text-sangria dark:text-cornflower mb-6 text-center">Duvidas rapidas</h3>
+      <div class="space-y-4">
+        <div class="custom-card overflow-hidden">
+          <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-4 font-black flex justify-between items-center">
+            <span>Preciso pagar para usar a plataforma?</span>
+            <span class="text-sangria dark:text-cornflower font-black">+</span>
+          </button>
+          <div class="hidden px-6 pb-4 text-sm opacity-90 border-t border-cornflower/30 pt-3">
+            Nao. A Mochila Inteligente e totalmente gratuita para organizar suas materias e cadernos universitarios.
+          </div>
+        </div>
+        <div class="custom-card overflow-hidden">
+          <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-4 font-black flex justify-between items-center">
+            <span>Onde ficam salvos os meus cadernos?</span>
+            <span class="text-sangria dark:text-cornflower font-black">+</span>
+          </button>
+          <div class="hidden px-6 pb-4 text-sm opacity-90 border-t border-cornflower/30 pt-3">
+            Os registros sao armazenados localmente no seu navegador com persistencia automatica.
+          </div>
+        </div>
+        <div class="custom-card overflow-hidden">
+          <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-4 font-black flex justify-between items-center">
+            <span>O que significa pauta travada?</span>
+            <span class="text-sangria dark:text-cornflower font-black">+</span>
+          </button>
+          <div class="hidden px-6 pb-4 text-sm opacity-90 border-t border-cornflower/30 pt-3">
+            E o sistema de alinhamento que mantem cada linha de texto exatamente sobre a pauta da folha digital.
+          </div>
+        </div>
+      </div>
+    </section>
 
   </main>
 
-  <footer class="custom-footer py-6 px-8 text-center text-xs font-black uppercase tracking-wider mt-12 shadow-inner">
+  <footer class="custom-footer py-6 px-8 text-center text-xs font-black uppercase tracking-wider mt-12">
     <p>Mochila Inteligente | Plataforma Academica Institucional</p>
+    <p class="mt-1">Desenvolvimento de Interfaces 2026 | Padrao WCAG AAA</p>
   </footer>
 
   <script src="script.js"></script>
