@@ -1,8 +1,5 @@
 let currentFontSize = parseInt(localStorage.getItem('mochila_font')) || 16;
-let itemsList = JSON.parse(localStorage.getItem('mochila_items_v5')) || [
-  { nome: "Banco de Dados", semestre: "2 Semestre", tipo: "Caderno", pauta: "Com pauta" },
-  { nome: "Engenharia de Software", semestre: "3 Semestre", tipo: "Materia", pauta: "Sem pauta" }
-];
+let materiasList = JSON.parse(localStorage.getItem('mochila_materias_v6')) || [];
 let activeFilter = 'todos';
 
 function applySavedPreferences() {
@@ -56,74 +53,177 @@ function handleLogin(event) {
   }
 }
 
-function renderItems() {
-  const grid = document.getElementById('cards-grid');
-  const emptyMsg = document.getElementById('empty-msg');
-  const counterBox = document.getElementById('counter-box');
-  
-  if (!grid) return;
-  
-  grid.innerHTML = '';
-  
-  const filteredList = activeFilter === 'todos' 
-    ? itemsList 
-    : itemsList.filter(item => item.semestre === activeFilter);
+function saveMaterias() {
+  localStorage.setItem('mochila_materias_v6', JSON.stringify(materiasList));
+}
 
-  if (counterBox) {
-    counterBox.textContent = filteredList.length + ' Itens';
-  }
+function updateMateriaSelect() {
+  const select = document.getElementById('caderno-materia');
+  const btn = document.getElementById('btn-add-caderno');
+  if (!select) return;
 
-  if (filteredList.length === 0) {
-    if (emptyMsg) emptyMsg.style.display = 'block';
+  select.innerHTML = '';
+
+  if (materiasList.length === 0) {
+    const opt = document.createElement('option');
+    opt.value = '';
+    opt.textContent = 'Crie uma materia primeiro';
+    opt.className = 'bg-charcoal text-cosmic';
+    select.appendChild(opt);
+    if (btn) btn.disabled = true;
     return;
   }
 
-  if (emptyMsg) emptyMsg.style.display = 'none';
+  if (btn) btn.disabled = false;
 
-  filteredList.forEach((item) => {
-    const realIndex = itemsList.indexOf(item);
-    const card = document.createElement('div');
-    card.className = 'notebook-cover p-6 rounded-xl shadow-md flex flex-col justify-between relative overflow-hidden';
-    card.innerHTML = `
-      <div class="absolute right-0 top-0 bottom-0 w-3 bg-cornflower opacity-40"></div>
-      <div>
-        <span class="inline-block bg-cornflower text-charcoal text-xs font-black px-2.5 py-1 rounded mb-3 uppercase tracking-wider">${item.tipo}</span>
-        <h4 class="text-xl font-black mb-1">${item.nome}</h4>
-        <p class="text-xs font-bold opacity-80">${item.semestre} | ${item.pauta || 'Com pauta'}</p>
-      </div>
-      <div class="mt-6 flex justify-between items-center pt-4 border-t border-cornflower/30">
-        <span class="text-xs font-bold opacity-70">1 pagina</span>
-        <button onclick="removeItem(${realIndex})" class="text-xs bg-sangria text-cosmic px-3.5 py-2 rounded-lg font-black hover:opacity-80 transition uppercase tracking-wider">Excluir</button>
+  materiasList.forEach((materia) => {
+    const opt = document.createElement('option');
+    opt.value = materia.id;
+    opt.textContent = materia.nome;
+    opt.className = 'bg-charcoal text-cosmic';
+    select.appendChild(opt);
+  });
+}
+
+function renderDashboard() {
+  const container = document.getElementById('materias-container');
+  const counterBox = document.getElementById('counter-box');
+  if (!container) return;
+
+  updateMateriaSelect();
+  container.innerHTML = '';
+
+  let totalCadernos = 0;
+  materiasList.forEach((m) => {
+    totalCadernos += m.cadernos.length;
+  });
+
+  if (counterBox) {
+    const labelMat = materiasList.length === 1 ? 'Materia' : 'Materias';
+    const labelCad = totalCadernos === 1 ? 'Caderno' : 'Cadernos';
+    counterBox.textContent = `${materiasList.length} ${labelMat} | ${totalCadernos} ${labelCad}`;
+  }
+
+  if (materiasList.length === 0) {
+    container.innerHTML = `
+      <div class="custom-card p-10 text-center">
+        <p class="text-base font-black text-sangria dark:text-cornflower mb-2">Sua mochila esta vazia</p>
+        <p class="text-sm opacity-75">Crie sua primeira materia no formulario ao lado para comecar a adicionar cadernos.</p>
       </div>
     `;
-    grid.appendChild(card);
+    return;
+  }
+
+  materiasList.forEach((materia) => {
+    const filteredCadernos = activeFilter === 'todos'
+      ? materia.cadernos
+      : materia.cadernos.filter((c) => c.semestre === activeFilter);
+
+    const section = document.createElement('div');
+    section.className = 'custom-card p-6 shadow-sm space-y-5';
+
+    const labelQtd = filteredCadernos.length === 1 ? 'caderno' : 'cadernos';
+
+    let cadernosHtml = '';
+    if (filteredCadernos.length === 0) {
+      cadernosHtml = `
+        <p class="text-xs font-semibold opacity-60 text-center py-8 border-2 border-dashed border-cornflower rounded-lg">
+          Nenhum caderno encontrado nesta materia para o filtro atual.
+        </p>
+      `;
+    } else {
+      cadernosHtml = `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+      filteredCadernos.forEach((caderno) => {
+        cadernosHtml += `
+          <div class="notebook-cover p-5 rounded-xl shadow-md flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute right-0 top-0 bottom-0 w-3 bg-cornflower opacity-40"></div>
+            <div>
+              <span class="inline-block bg-cornflower text-charcoal text-xs font-black px-2.5 py-1 rounded mb-3 uppercase tracking-wider">${caderno.semestre}</span>
+              <h4 class="text-lg font-black mb-1">${caderno.titulo}</h4>
+              <p class="text-xs font-bold opacity-80">${caderno.pauta}</p>
+            </div>
+            <div class="mt-5 flex justify-between items-center pt-3 border-t border-cornflower/30">
+              <span class="text-xs font-bold opacity-70">1 pagina</span>
+              <button onclick="removeCaderno(${materia.id}, ${caderno.id})" class="text-xs bg-sangria text-cosmic px-3 py-1.5 rounded-lg font-black hover:opacity-80 transition uppercase tracking-wider">Excluir</button>
+            </div>
+          </div>
+        `;
+      });
+      cadernosHtml += `</div>`;
+    }
+
+    section.innerHTML = `
+      <div class="flex flex-wrap justify-between items-center gap-3 pb-3 border-b-2 border-cornflower/30">
+        <div class="flex items-center gap-3">
+          <h3 class="text-xl font-black text-sangria dark:text-cornflower">${materia.nome}</h3>
+          <span class="bg-cornflower text-charcoal text-xs font-black px-2.5 py-0.5 rounded">${filteredCadernos.length} ${labelQtd}</span>
+        </div>
+        <button onclick="removeMateria(${materia.id})" class="text-xs border-2 border-cornflower px-3 py-1.5 rounded-lg font-black hover:bg-sangria hover:text-cosmic hover:border-sangria transition uppercase tracking-wider">Excluir Materia</button>
+      </div>
+      ${cadernosHtml}
+    `;
+
+    container.appendChild(section);
   });
+}
+
+function handleMateriaSubmit(event) {
+  event.preventDefault();
+  const input = document.getElementById('materia-nome');
+  const nome = input.value.trim();
+  if (!nome) return;
+
+  materiasList.push({
+    id: Date.now(),
+    nome: nome,
+    cadernos: []
+  });
+
+  saveMaterias();
+  input.value = '';
+  renderDashboard();
+}
+
+function handleCadernoSubmit(event) {
+  event.preventDefault();
+  const materiaId = parseInt(document.getElementById('caderno-materia').value);
+  const tituloInput = document.getElementById('caderno-titulo');
+  const semestre = document.getElementById('caderno-semestre').value;
+  const pauta = document.getElementById('caderno-pauta').value;
+
+  const materia = materiasList.find((m) => m.id === materiaId);
+  if (!materia || !tituloInput.value.trim()) return;
+
+  materia.cadernos.push({
+    id: Date.now(),
+    titulo: tituloInput.value.trim(),
+    semestre: semestre,
+    pauta: pauta
+  });
+
+  saveMaterias();
+  tituloInput.value = '';
+  renderDashboard();
+}
+
+function removeMateria(materiaId) {
+  materiasList = materiasList.filter((m) => m.id !== materiaId);
+  saveMaterias();
+  renderDashboard();
+}
+
+function removeCaderno(materiaId, cadernoId) {
+  const materia = materiasList.find((m) => m.id === materiaId);
+  if (!materia) return;
+  materia.cadernos = materia.cadernos.filter((c) => c.id !== cadernoId);
+  saveMaterias();
+  renderDashboard();
 }
 
 function filterSemester(semestre) {
   activeFilter = semestre;
-  renderItems();
-}
-
-function handleItemSubmit(event) {
-  event.preventDefault();
-  const nome = document.getElementById('item-nome').value;
-  const semestre = document.getElementById('item-semestre').value;
-  const tipo = document.getElementById('item-tipo').value;
-  const pauta = document.getElementById('item-pauta').value;
-
-  itemsList.push({ nome, semestre, tipo, pauta });
-  localStorage.setItem('mochila_items_v5', JSON.stringify(itemsList));
-  
-  document.getElementById('item-nome').value = '';
-  renderItems();
-}
-
-function removeItem(index) {
-  itemsList.splice(index, 1);
-  localStorage.setItem('mochila_items_v5', JSON.stringify(itemsList));
-  renderItems();
+  renderDashboard();
 }
 
 applySavedPreferences();
-renderItems();
+renderDashboard();
