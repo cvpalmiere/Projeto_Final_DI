@@ -2,6 +2,10 @@ let currentFontSize = parseInt(localStorage.getItem('mochila_font')) || 16;
 let materiasList = JSON.parse(localStorage.getItem('mochila_materias_v6')) || [];
 let activeFilter = 'todos';
 
+let currentMateria = null;
+let currentCaderno = null;
+let currentPageIndex = 0;
+
 function applySavedPreferences() {
   const savedTheme = localStorage.getItem('mochila_theme');
   if (savedTheme === 'light') {
@@ -55,6 +59,12 @@ function handleLogin(event) {
 
 function saveMaterias() {
   localStorage.setItem('mochila_materias_v6', JSON.stringify(materiasList));
+}
+
+function ensurePagesStructure(caderno) {
+  if (!caderno.paginas || caderno.paginas.length === 0) {
+    caderno.paginas = [{ id: Date.now(), conteudo: '', notas: [] }];
+  }
 }
 
 function updateMateriaSelect() {
@@ -134,6 +144,9 @@ function renderDashboard() {
     } else {
       cadernosHtml = `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
       filteredCadernos.forEach((caderno) => {
+        ensurePagesStructure(caderno);
+        const totalPaginas = caderno.paginas.length;
+        const labelPag = totalPaginas === 1 ? 'pagina' : 'paginas';
         cadernosHtml += `
           <div class="notebook-cover p-5 rounded-xl shadow-md flex flex-col justify-between relative overflow-hidden">
             <div class="absolute right-0 top-0 bottom-0 w-3 bg-cornflower opacity-40"></div>
@@ -142,9 +155,12 @@ function renderDashboard() {
               <h4 class="text-lg font-black mb-1">${caderno.titulo}</h4>
               <p class="text-xs font-bold opacity-80">${caderno.pauta}</p>
             </div>
-            <div class="mt-5 flex justify-between items-center pt-3 border-t border-cornflower/30">
-              <span class="text-xs font-bold opacity-70">1 pagina</span>
-              <button onclick="removeCaderno(${materia.id}, ${caderno.id})" class="text-xs bg-sangria text-cosmic px-3 py-1.5 rounded-lg font-black hover:opacity-80 transition uppercase tracking-wider">Excluir</button>
+            <div class="mt-5 flex justify-between items-center gap-2 pt-3 border-t border-cornflower/30">
+              <span class="text-xs font-bold opacity-70">${totalPaginas} ${labelPag}</span>
+              <div class="flex items-center gap-2">
+                <a href="editor.html?materia=${materia.id}&caderno=${caderno.id}" class="text-xs bg-cornflower text-charcoal px-3 py-1.5 rounded-lg font-black hover:opacity-90 transition uppercase tracking-wider">Abrir</a>
+                <button onclick="removeCaderno(${materia.id}, ${caderno.id})" class="text-xs bg-sangria text-cosmic px-3 py-1.5 rounded-lg font-black hover:opacity-80 transition uppercase tracking-wider">Excluir</button>
+              </div>
             </div>
           </div>
         `;
@@ -198,7 +214,8 @@ function handleCadernoSubmit(event) {
     id: Date.now(),
     titulo: tituloInput.value.trim(),
     semestre: semestre,
-    pauta: pauta
+    pauta: pauta,
+    paginas: [{ id: Date.now() + 1, conteudo: '', notas: [] }]
   });
 
   saveMaterias();
@@ -225,5 +242,228 @@ function filterSemester(semestre) {
   renderDashboard();
 }
 
+function applySheetClass(pauta) {
+  const sheet = document.getElementById('notebook-sheet');
+  if (!sheet) return;
+  sheet.classList.remove('sheet-ruled', 'sheet-plain', 'sheet-grid', 'sheet-dotted');
+  if (pauta === 'Sem pauta') {
+    sheet.classList.add('sheet-plain');
+  } else if (pauta === 'Quadriculado') {
+    sheet.classList.add('sheet-grid');
+  } else if (pauta === 'Pontilhado') {
+    sheet.classList.add('sheet-dotted');
+  } else {
+    sheet.classList.add('sheet-ruled');
+  }
+}
+
+function initEditor() {
+  const workspace = document.getElementById('editor-workspace');
+  const missing = document.getElementById('editor-missing');
+  const toolbar = document.getElementById('editor-toolbar');
+  if (!workspace) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const materiaId = parseInt(params.get('materia'));
+  const cadernoId = parseInt(params.get('caderno'));
+
+  currentMateria = materiasList.find((m) => m.id === materiaId);
+  if (currentMateria) {
+    currentCaderno = currentMateria.cadernos.find((c) => c.id === cadernoId);
+  }
+
+  if (!currentMateria || !currentCaderno) {
+    workspace.classList.add('hidden');
+    if (toolbar) toolbar.classList.add('hidden');
+    if (missing) missing.classList.remove('hidden');
+    return;
+  }
+
+  ensurePagesStructure(currentCaderno);
+  saveMaterias();
+
+  document.getElementById('editor-caderno-titulo').textContent = currentCaderno.titulo;
+  document.getElementById('editor-caderno-subtitulo').textContent = `${currentMateria.nome} | ${currentCaderno.semestre}`;
+  document.getElementById('sheet-header-label').textContent = `${currentMateria.nome} / ${currentCaderno.titulo}`;
+  document.getElementById('editor-pauta-select').value = currentCaderno.pauta || 'Com pauta';
+
+  applySheetClass(currentCaderno.pauta);
+  renderCurrentPage();
+  renderPageTabs();
+}
+
+function renderCurrentPage() {
+  if (!currentCaderno) return;
+  const page = currentCaderno.paginas[currentPageIndex];
+  const editor = document.getElementById('editor-content');
+  const pageLabel = document.getElementById('sheet-page-label');
+  const deleteBtn = document.getElementById('btn-delete-page');
+
+  if (pageLabel) {
+    pageLabel.textContent = `Pagina ${currentPageIndex + 1}`;
+  }
+  if (editor) {
+    editor.innerHTML = page.conteudo || '';
+  }
+  if (deleteBtn) {
+    deleteBtn.style.display = currentCaderno.paginas.length > 1 ? 'inline-block' : 'none';
+  }
+  renderStickyNotes();
+}
+
+function renderPageTabs() {
+  const tabs = document.getElementById('pages-tabs');
+  if (!tabs || !currentCaderno) return;
+  tabs.innerHTML = '';
+
+  currentCaderno.paginas.forEach((page, index) => {
+    const btn = document.createElement('button');
+    const isActive = index === currentPageIndex;
+    btn.className = isActive
+      ? 'w-10 h-10 rounded-lg bg-sangria text-cosmic font-black text-xs shadow'
+      : 'w-10 h-10 rounded-lg custom-card font-black text-xs hover:bg-cornflower hover:text-charcoal transition';
+    btn.textContent = index + 1;
+    btn.onclick = () => {
+      currentPageIndex = index;
+      renderCurrentPage();
+      renderPageTabs();
+    };
+    tabs.appendChild(btn);
+  });
+}
+
+function renderStickyNotes() {
+  const zone = document.getElementById('sticky-notes-zone');
+  if (!zone || !currentCaderno) return;
+  const page = currentCaderno.paginas[currentPageIndex];
+  if (!page.notas) page.notas = [];
+  zone.innerHTML = '';
+
+  page.notas.forEach((nota) => {
+    const card = document.createElement('div');
+    card.className = 'sticky-note-card shadow-md';
+    card.innerHTML = `
+      <div class="flex justify-between items-center mb-1">
+        <span class="text-[10px] font-black uppercase tracking-wider text-sangria">Nota</span>
+        <button type="button" onclick="removeStickyNote(${nota.id})" class="text-[10px] font-black uppercase text-sangria hover:underline no-print">Remover</button>
+      </div>
+      <textarea oninput="updateStickyNote(${nota.id}, this.value)" placeholder="Escreva um lembrete..." class="sticky-note-textarea">${nota.texto || ''}</textarea>
+    `;
+    zone.appendChild(card);
+  });
+}
+
+function updateSaveBadge(text) {
+  const badge = document.getElementById('save-status');
+  if (badge) badge.textContent = text;
+}
+
+function handleEditorInput() {
+  if (!currentCaderno) return;
+  const editor = document.getElementById('editor-content');
+  currentCaderno.paginas[currentPageIndex].conteudo = editor.innerHTML;
+  saveMaterias();
+  updateSaveBadge('Salvo');
+}
+
+function changeSheetStyle(newStyle) {
+  if (!currentCaderno) return;
+  currentCaderno.pauta = newStyle;
+  applySheetClass(newStyle);
+  saveMaterias();
+  updateSaveBadge('Salvo');
+}
+
+function changeEditorTextSize(sizeValue) {
+  const editor = document.getElementById('editor-content');
+  if (editor) {
+    editor.style.fontSize = sizeValue + 'px';
+  }
+}
+
+function formatBold() {
+  document.execCommand('bold', false, null);
+  handleEditorInput();
+}
+
+function insertSectionTitle() {
+  const editor = document.getElementById('editor-content');
+  if (!editor) return;
+  editor.focus();
+  const titleEl = document.createElement('div');
+  titleEl.className = 'section-heading';
+  titleEl.textContent = 'Titulo da Secao';
+  editor.appendChild(titleEl);
+  const lineEl = document.createElement('div');
+  lineEl.innerHTML = '<br>';
+  editor.appendChild(lineEl);
+  handleEditorInput();
+}
+
+function insertChecklist() {
+  const editor = document.getElementById('editor-content');
+  if (!editor) return;
+  editor.focus();
+  const itemEl = document.createElement('div');
+  itemEl.className = 'checklist-item';
+  itemEl.innerHTML = '<input type="checkbox"><span>Novo item de estudo</span>';
+  editor.appendChild(itemEl);
+  handleEditorInput();
+}
+
+function addStickyNote() {
+  if (!currentCaderno) return;
+  const page = currentCaderno.paginas[currentPageIndex];
+  if (!page.notas) page.notas = [];
+  page.notas.push({ id: Date.now(), texto: '' });
+  saveMaterias();
+  renderStickyNotes();
+  updateSaveBadge('Salvo');
+}
+
+function updateStickyNote(noteId, textValue) {
+  if (!currentCaderno) return;
+  const page = currentCaderno.paginas[currentPageIndex];
+  const nota = page.notas.find((n) => n.id === noteId);
+  if (nota) {
+    nota.texto = textValue;
+    saveMaterias();
+    updateSaveBadge('Salvo');
+  }
+}
+
+function removeStickyNote(noteId) {
+  if (!currentCaderno) return;
+  const page = currentCaderno.paginas[currentPageIndex];
+  page.notas = page.notas.filter((n) => n.id !== noteId);
+  saveMaterias();
+  renderStickyNotes();
+}
+
+function addNewPage() {
+  if (!currentCaderno) return;
+  currentCaderno.paginas.push({ id: Date.now(), conteudo: '', notas: [] });
+  currentPageIndex = currentCaderno.paginas.length - 1;
+  saveMaterias();
+  renderCurrentPage();
+  renderPageTabs();
+}
+
+function deleteCurrentPage() {
+  if (!currentCaderno || currentCaderno.paginas.length <= 1) return;
+  currentCaderno.paginas.splice(currentPageIndex, 1);
+  if (currentPageIndex >= currentCaderno.paginas.length) {
+    currentPageIndex = currentCaderno.paginas.length - 1;
+  }
+  saveMaterias();
+  renderCurrentPage();
+  renderPageTabs();
+}
+
+function exportNotebookPdf() {
+  window.print();
+}
+
 applySavedPreferences();
 renderDashboard();
+initEditor();

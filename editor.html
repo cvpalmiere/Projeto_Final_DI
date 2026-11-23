@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor | Mochila Inteligente</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cosmic: '#FFF8E7',
+            sangria: '#930500',
+            cornflower: '#95BBEA',
+            charcoal: '#18181C',
+            carddark: '#242429'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <header class="custom-header py-4 px-6 flex flex-wrap items-center justify-between gap-4 shadow-md no-print">
+    <div class="flex items-center gap-4">
+      <a href="dashboard.html" class="px-4 py-2 rounded-lg border-2 border-cornflower font-black text-xs uppercase tracking-wider hover:bg-cornflower hover:text-charcoal transition">Voltar ao Armario</a>
+      <div>
+        <h1 id="editor-caderno-titulo" class="text-lg font-black text-sangria dark:text-cornflower leading-tight">Caderno</h1>
+        <p id="editor-caderno-subtitulo" class="text-xs font-bold opacity-80">Materia | Semestre</p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3">
+      <span id="save-status" class="text-xs font-black px-3 py-1.5 rounded-lg bg-cornflower/20 border border-cornflower">Salvo</span>
+      <button onclick="exportNotebookPdf()" class="px-4 py-2 rounded-lg bg-sangria text-cosmic font-black text-xs uppercase tracking-wider hover:opacity-90 transition">Exportar PDF</button>
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-cornflower">
+        <button onclick="changeFontSize(-1)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Menor</button>
+        <button onclick="changeFontSize(0)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Padrao</button>
+        <button onclick="changeFontSize(1)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Maior</button>
+        <button onclick="toggleTheme()" class="ml-1 px-3 py-1 bg-sangria text-cosmic rounded font-bold text-xs hover:opacity-90 transition">Tema</button>
+      </div>
+    </div>
+  </header>
+
+  <section id="editor-toolbar" class="custom-card mx-auto mt-6 px-5 py-3 w-[95%] max-w-5xl flex flex-wrap items-center justify-between gap-3 no-print">
+    <div class="flex flex-wrap items-center gap-2">
+      <select id="editor-pauta-select" onchange="changeSheetStyle(this.value)" class="px-3 py-2 rounded-lg border-2 border-cornflower bg-transparent text-xs font-black outline-none">
+        <option value="Com pauta" class="bg-charcoal text-cosmic">Com pauta</option>
+        <option value="Sem pauta" class="bg-charcoal text-cosmic">Sem pauta</option>
+        <option value="Quadriculado" class="bg-charcoal text-cosmic">Quadriculado</option>
+        <option value="Pontilhado" class="bg-charcoal text-cosmic">Pontilhado</option>
+      </select>
+
+      <select id="editor-size-select" onchange="changeEditorTextSize(this.value)" class="px-3 py-2 rounded-lg border-2 border-cornflower bg-transparent text-xs font-black outline-none">
+        <option value="16" class="bg-charcoal text-cosmic">Texto 16</option>
+        <option value="18" class="bg-charcoal text-cosmic">Texto 18</option>
+        <option value="20" class="bg-charcoal text-cosmic">Texto 20</option>
+      </select>
+
+      <button type="button" onclick="formatBold()" class="px-3 py-2 rounded-lg border-2 border-cornflower font-black text-xs hover:bg-cornflower hover:text-charcoal transition">Negrito</button>
+      <button type="button" onclick="insertSectionTitle()" class="px-3 py-2 rounded-lg border-2 border-cornflower font-black text-xs hover:bg-cornflower hover:text-charcoal transition">Titulo de Secao</button>
+      <button type="button" onclick="insertChecklist()" class="px-3 py-2 rounded-lg border-2 border-cornflower font-black text-xs hover:bg-cornflower hover:text-charcoal transition">Checklist</button>
+      <button type="button" onclick="addStickyNote()" class="px-3 py-2 rounded-lg bg-cornflower text-charcoal font-black text-xs hover:opacity-90 transition">Nota Adesiva</button>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button type="button" onclick="addNewPage()" class="px-3 py-2 rounded-lg bg-sangria text-cosmic font-black text-xs uppercase tracking-wider hover:opacity-90 transition">Nova Pagina</button>
+      <button type="button" id="btn-delete-page" onclick="deleteCurrentPage()" class="px-3 py-2 rounded-lg border-2 border-cornflower font-black text-xs uppercase tracking-wider hover:bg-sangria hover:text-cosmic hover:border-sangria transition">Excluir Pagina</button>
+    </div>
+  </section>
+
+  <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+    <div id="editor-missing" class="hidden custom-card p-10 text-center max-w-lg mx-auto">
+      <h2 class="text-2xl font-black text-sangria dark:text-cornflower mb-3">Caderno nao encontrado</h2>
+      <p class="text-sm opacity-80 mb-6">Selecione um caderno valido no seu armario para iniciar as anotacoes.</p>
+      <a href="dashboard.html" class="inline-block bg-sangria text-cosmic font-black px-6 py-3 rounded-lg text-xs uppercase tracking-wider">Ir para o Armario</a>
+    </div>
+
+    <div id="editor-workspace" class="flex flex-col md:flex-row items-start justify-center gap-4">
+      <div id="notebook-sheet" class="notebook-sheet flex-grow w-full rounded-xl shadow-xl border-2 border-cornflower overflow-hidden">
+        <div class="px-6 py-3 border-b-2 border-cornflower/40 flex justify-between items-center text-xs font-black uppercase tracking-wider">
+          <span id="sheet-header-label">Materia / Caderno</span>
+          <span id="sheet-page-label">Pagina 1</span>
+        </div>
+
+        <div class="page-body relative pl-10 pr-6 py-6">
+          <div id="sticky-notes-zone" class="sticky-notes-zone"></div>
+          <div id="editor-content" contenteditable="true" oninput="handleEditorInput()" class="editor-content" data-placeholder="Comece a escrever suas anotacoes sobre a pauta..."></div>
+        </div>
+      </div>
+
+      <aside id="pages-tabs" class="flex md:flex-col gap-2 no-print">
+      </aside>
+    </div>
+  </main>
+
+  <footer class="custom-footer py-6 px-8 text-center text-xs font-black uppercase tracking-wider mt-12 no-print">
+    <p>Mochila Inteligente</p>
+    <p class="mt-1">Desenvolvimento de Interfaces</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

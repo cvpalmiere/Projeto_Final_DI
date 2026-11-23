@@ -6,6 +6,8 @@
   --brand-cornflower: #95BBEA;
   --charcoal: #18181C;
   --cosmic: #FFF8E7;
+  --line-color: rgba(149, 187, 234, 0.55);
+  --margin-line: rgba(147, 5, 0, 0.45);
 }
 
 html.dark {
@@ -16,6 +18,8 @@ html.dark {
   --brand-cornflower: #95BBEA;
   --charcoal: #18181C;
   --cosmic: #FFF8E7;
+  --line-color: rgba(149, 187, 234, 0.25);
+  --margin-line: rgba(147, 5, 0, 0.65);
 }
 
 html {
@@ -69,6 +73,99 @@ body {
   background-size: 18px 18px;
 }
 
+.notebook-sheet {
+  background-color: var(--bg-card);
+}
+
+.page-body {
+  min-height: 640px;
+  border-left: 2px solid var(--margin-line);
+  margin-left: 24px;
+}
+
+.sheet-ruled .page-body {
+  background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 27px, var(--line-color) 27px, var(--line-color) 28px);
+  background-size: 100% 28px;
+  background-position-y: 24px;
+}
+
+.sheet-grid .page-body {
+  background-image: linear-gradient(to right, var(--line-color) 1px, transparent 1px), linear-gradient(to bottom, var(--line-color) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.sheet-dotted .page-body {
+  background-image: radial-gradient(var(--brand-cornflower) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+}
+
+.sheet-plain .page-body {
+  background-image: none;
+}
+
+.editor-content {
+  min-height: 580px;
+  line-height: 28px;
+  font-size: 16px;
+  outline: none;
+  word-wrap: break-word;
+}
+
+.editor-content:empty::before {
+  content: attr(data-placeholder);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.editor-content .section-heading {
+  font-weight: 900;
+  color: #930500;
+  line-height: 28px;
+  margin: 0;
+}
+
+html.dark .editor-content .section-heading {
+  color: #95BBEA;
+}
+
+.editor-content .checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 28px;
+}
+
+.sticky-notes-zone {
+  float: right;
+  width: 220px;
+  margin: 0 0 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sticky-note-card {
+  background-color: #FFF8E7;
+  color: #18181C;
+  border: 2px solid #930500;
+  border-top: 8px solid #95BBEA;
+  border-radius: 0.5rem;
+  padding: 10px;
+}
+
+.sticky-note-textarea {
+  width: 100%;
+  min-height: 76px;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: vertical;
+  font-size: 13px;
+  font-weight: 700;
+  color: #18181C;
+  line-height: 1.4;
+}
+
 *:focus-visible {
   outline: 3px solid var(--brand-cornflower);
   outline-offset: 3px;
@@ -76,4 +173,22 @@ body {
 
 input, select {
   color: inherit;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background-color: #FFFFFF !important;
+    color: #18181C !important;
+  }
+  .notebook-sheet {
+    background-color: #FFFFFF !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .page-body {
+    margin-left: 12px !important;
+  }
 }
