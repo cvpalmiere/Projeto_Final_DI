@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8">
@@ -11,11 +11,12 @@
       theme: {
         extend: {
           colors: {
-            cosmic: '#FFF8E7',
-            sangria: '#930500',
-            cornflower: '#95BBEA',
-            charcoal: '#18181C',
-            carddark: '#242429'
+            cosmic: 'var(--text-on-primary)',
+            sangria: 'var(--brand-primary)',
+            cornflower: 'var(--brand-accent)',
+            charcoal: 'var(--text-on-accent)',
+            carddark: 'var(--bg-card)',
+            alerta: 'var(--brand-alert)'
           }
         }
       }
@@ -41,7 +42,26 @@
         <button onclick="changeFontSize(-1)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Menor</button>
         <button onclick="changeFontSize(0)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Padrao</button>
         <button onclick="changeFontSize(1)" class="px-2 py-1 bg-charcoal text-cosmic rounded font-bold text-xs hover:bg-sangria transition">Maior</button>
-        <button onclick="toggleTheme()" class="ml-1 px-3 py-1 bg-sangria text-cosmic rounded font-bold text-xs hover:opacity-90 transition">Tema</button>
+        <button type="button" onclick="toggleTheme()" class="theme-switch" aria-label="Alternar tema">
+  <span class="theme-switch-knob">
+    <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <circle cx="12" cy="12" r="5"></circle>
+      <polygon points="12,1 10.5,5 13.5,5"></polygon>
+      <polygon points="12,23 10.5,19 13.5,19"></polygon>
+      <polygon points="1,12 5,10.5 5,13.5"></polygon>
+      <polygon points="23,12 19,10.5 19,13.5"></polygon>
+      <polygon points="4.2,4.2 7.8,6.2 6.2,7.8"></polygon>
+      <polygon points="19.8,19.8 16.2,17.8 17.8,16.2"></polygon>
+      <polygon points="19.8,4.2 16.2,6.2 17.8,7.8"></polygon>
+      <polygon points="4.2,19.8 7.8,17.8 6.2,16.2"></polygon>
+    </svg>
+    <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M13.5 4.5a7.5 7.5 0 1 0 6 12 6.5 6.5 0 0 1-6-12z"></path>
+      <path d="M17.5 7l.7 1.5 1.5.7-1.5.7-.7 1.5-.7-1.5-1.5-.7 1.5-.7z"></path>
+      <path d="M20.5 11.5l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5z"></path>
+    </svg>
+  </span>
+</button>
       </div>
     </div>
   </header>

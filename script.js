@@ -78,7 +78,7 @@ function updateMateriaSelect() {
     const opt = document.createElement('option');
     opt.value = '';
     opt.textContent = 'Crie uma materia primeiro';
-    opt.className = 'bg-charcoal text-cosmic';
+    opt.className = 'bg-carddark text-charcoal';
     select.appendChild(opt);
     if (btn) btn.disabled = true;
     return;
@@ -90,7 +90,7 @@ function updateMateriaSelect() {
     const opt = document.createElement('option');
     opt.value = materia.id;
     opt.textContent = materia.nome;
-    opt.className = 'bg-charcoal text-cosmic';
+    opt.className = 'bg-carddark text-charcoal';
     select.appendChild(opt);
   });
 }
@@ -116,9 +116,10 @@ function renderDashboard() {
 
   if (materiasList.length === 0) {
     container.innerHTML = `
-      <div class="custom-card p-10 text-center">
-        <p class="text-base font-black text-sangria dark:text-cornflower mb-2">Sua mochila esta vazia</p>
-        <p class="text-sm opacity-75">Crie sua primeira materia no formulario ao lado para comecar a adicionar cadernos.</p>
+      <div class="alert-banner p-8 text-center">
+        <span class="inline-block bg-alerta text-cosmic text-xs font-black px-2.5 py-1 rounded mb-3 uppercase tracking-wider">Aviso</span>
+        <p class="text-base font-black mb-1">Sua mochila esta vazia</p>
+        <p class="text-sm opacity-85">Crie sua primeira materia no formulario ao lado para comecar a adicionar cadernos.</p>
       </div>
     `;
     return;
@@ -130,7 +131,7 @@ function renderDashboard() {
       : materia.cadernos.filter((c) => c.semestre === activeFilter);
 
     const section = document.createElement('div');
-    section.className = 'custom-card p-6 shadow-sm space-y-5';
+    section.className = 'custom-card p-6 space-y-5';
 
     const labelQtd = filteredCadernos.length === 1 ? 'caderno' : 'cadernos';
 
@@ -148,18 +149,17 @@ function renderDashboard() {
         const totalPaginas = caderno.paginas.length;
         const labelPag = totalPaginas === 1 ? 'pagina' : 'paginas';
         cadernosHtml += `
-          <div class="notebook-cover p-5 rounded-xl shadow-md flex flex-col justify-between relative overflow-hidden">
-            <div class="absolute right-0 top-0 bottom-0 w-3 bg-cornflower opacity-40"></div>
+          <div class="notebook-cover p-5 rounded-xl flex flex-col justify-between relative overflow-hidden">
             <div>
               <span class="inline-block bg-cornflower text-charcoal text-xs font-black px-2.5 py-1 rounded mb-3 uppercase tracking-wider">${caderno.semestre}</span>
               <h4 class="text-lg font-black mb-1">${caderno.titulo}</h4>
               <p class="text-xs font-bold opacity-80">${caderno.pauta}</p>
             </div>
-            <div class="mt-5 flex justify-between items-center gap-2 pt-3 border-t border-cornflower/30">
+            <div class="mt-5 flex justify-between items-center gap-2 pt-3 border-t border-cornflower">
               <span class="text-xs font-bold opacity-70">${totalPaginas} ${labelPag}</span>
               <div class="flex items-center gap-2">
-                <a href="editor.html?materia=${materia.id}&caderno=${caderno.id}" class="text-xs bg-cornflower text-charcoal px-3 py-1.5 rounded-lg font-black hover:opacity-90 transition uppercase tracking-wider">Abrir</a>
-                <button onclick="removeCaderno(${materia.id}, ${caderno.id})" class="text-xs bg-sangria text-cosmic px-3 py-1.5 rounded-lg font-black hover:opacity-80 transition uppercase tracking-wider">Excluir</button>
+                <a href="editor.html?materia=${materia.id}&caderno=${caderno.id}" class="text-xs bg-sangria text-cosmic px-3 py-1.5 rounded-lg font-black hover:opacity-90 transition uppercase tracking-wider">Abrir</a>
+                <button onclick="removeCaderno(${materia.id}, ${caderno.id})" class="text-xs bg-alerta text-cosmic px-3 py-1.5 rounded-lg font-black hover:opacity-80 transition uppercase tracking-wider">Excluir</button>
               </div>
             </div>
           </div>
@@ -169,12 +169,12 @@ function renderDashboard() {
     }
 
     section.innerHTML = `
-      <div class="flex flex-wrap justify-between items-center gap-3 pb-3 border-b-2 border-cornflower/30">
+      <div class="flex flex-wrap justify-between items-center gap-3 pb-3 border-b-2 border-cornflower">
         <div class="flex items-center gap-3">
-          <h3 class="text-xl font-black text-sangria dark:text-cornflower">${materia.nome}</h3>
+          <h3 class="text-xl font-black text-sangria">${materia.nome}</h3>
           <span class="bg-cornflower text-charcoal text-xs font-black px-2.5 py-0.5 rounded">${filteredCadernos.length} ${labelQtd}</span>
         </div>
-        <button onclick="removeMateria(${materia.id})" class="text-xs border-2 border-cornflower px-3 py-1.5 rounded-lg font-black hover:bg-sangria hover:text-cosmic hover:border-sangria transition uppercase tracking-wider">Excluir Materia</button>
+        <button onclick="removeMateria(${materia.id})" class="text-xs border-2 border-alerta text-alerta px-3 py-1.5 rounded-lg font-black hover:bg-alerta hover:text-cosmic transition uppercase tracking-wider">Excluir Materia</button>
       </div>
       ${cadernosHtml}
     `;
@@ -320,7 +320,7 @@ function renderPageTabs() {
     const btn = document.createElement('button');
     const isActive = index === currentPageIndex;
     btn.className = isActive
-      ? 'w-10 h-10 rounded-lg bg-sangria text-cosmic font-black text-xs shadow'
+      ? 'w-10 h-10 rounded-lg bg-sangria text-cosmic font-black text-xs'
       : 'w-10 h-10 rounded-lg custom-card font-black text-xs hover:bg-cornflower hover:text-charcoal transition';
     btn.textContent = index + 1;
     btn.onclick = () => {
@@ -341,11 +341,11 @@ function renderStickyNotes() {
 
   page.notas.forEach((nota) => {
     const card = document.createElement('div');
-    card.className = 'sticky-note-card shadow-md';
+    card.className = 'sticky-note-card';
     card.innerHTML = `
       <div class="flex justify-between items-center mb-1">
-        <span class="text-[10px] font-black uppercase tracking-wider text-sangria">Nota</span>
-        <button type="button" onclick="removeStickyNote(${nota.id})" class="text-[10px] font-black uppercase text-sangria hover:underline no-print">Remover</button>
+        <span class="text-[10px] font-black uppercase tracking-wider text-alerta">Nota</span>
+        <button type="button" onclick="removeStickyNote(${nota.id})" class="text-[10px] font-black uppercase text-alerta hover:underline no-print">Remover</button>
       </div>
       <textarea oninput="updateStickyNote(${nota.id}, this.value)" placeholder="Escreva um lembrete..." class="sticky-note-textarea">${nota.texto || ''}</textarea>
     `;

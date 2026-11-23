@@ -1,25 +1,29 @@
 :root {
-  --bg-main: #FFF8E7;
-  --bg-card: #FFFFFF;
-  --text-main: #18181C;
-  --brand-sangria: #930500;
-  --brand-cornflower: #95BBEA;
-  --charcoal: #18181C;
-  --cosmic: #FFF8E7;
-  --line-color: rgba(149, 187, 234, 0.55);
-  --margin-line: rgba(147, 5, 0, 0.45);
+  --bg-main: #ECE8E0;
+  --bg-card: #F8F6F2;
+  --text-main: #1F1F22;
+  --brand-primary: #1155CC;
+  --brand-accent: #D6CFC3;
+  --brand-alert: #E02430;
+  --border-neutral: #D6CFC3;
+  --text-on-primary: #FFFFFF;
+  --text-on-accent: #1F1F22;
+  --line-color: rgba(31, 31, 34, 0.16);
+  --margin-line: rgba(224, 36, 48, 0.45);
 }
 
 html.dark {
-  --bg-main: #18181C;
-  --bg-card: #242429;
-  --text-main: #FFF8E7;
-  --brand-sangria: #930500;
-  --brand-cornflower: #95BBEA;
-  --charcoal: #18181C;
-  --cosmic: #FFF8E7;
-  --line-color: rgba(149, 187, 234, 0.25);
-  --margin-line: rgba(147, 5, 0, 0.65);
+  --bg-main: #18181A;
+  --bg-card: #232326;
+  --text-main: #F4F4F5;
+  --brand-primary: #1479FF;
+  --brand-accent: #38383D;
+  --brand-alert: #F53642;
+  --border-neutral: #38383D;
+  --text-on-primary: #FFFFFF;
+  --text-on-accent: #F4F4F5;
+  --line-color: rgba(244, 244, 245, 0.14);
+  --margin-line: rgba(245, 54, 66, 0.5);
 }
 
 html {
@@ -30,7 +34,7 @@ html {
 body {
   background-color: var(--bg-main);
   color: var(--text-main);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -38,43 +42,49 @@ body {
 
 .custom-card {
   background-color: var(--bg-card);
-  border: 2px solid var(--brand-cornflower);
-  border-radius: 1rem;
+  border: 2px solid var(--border-neutral);
+  border-radius: 0.75rem;
+  box-shadow: none;
 }
 
 .custom-header {
-  border-bottom: 3px solid var(--brand-sangria);
+  border-bottom: 2px solid var(--border-neutral);
   background-color: var(--bg-card);
+  box-shadow: none;
 }
 
 .custom-footer {
-  border-top: 3px solid var(--brand-sangria);
+  border-top: 2px solid var(--border-neutral);
   background-color: var(--bg-card);
+  box-shadow: none;
 }
 
 .notebook-cover {
-  background: linear-gradient(135deg, #930500 0%, #242429 100%);
-  color: #FFF8E7;
-  border-left: 12px solid #95BBEA;
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 2px solid var(--border-neutral);
+  border-left: 10px solid var(--brand-primary);
+  box-shadow: none;
 }
 
 .ruled-page {
-  background-image: repeating-linear-gradient(0deg, transparent, transparent 24px, #95BBEA 24px, #95BBEA 25px);
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 24px, var(--line-color) 24px, var(--line-color) 25px);
   background-size: 100% 25px;
 }
 
 .grid-page {
-  background-image: linear-gradient(to right, rgba(149, 187, 234, 0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(149, 187, 234, 0.35) 1px, transparent 1px);
+  background-image: linear-gradient(to right, var(--line-color) 1px, transparent 1px), linear-gradient(to bottom, var(--line-color) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
 .dotted-page {
-  background-image: radial-gradient(#95BBEA 1.5px, transparent 1.5px);
+  background-image: radial-gradient(var(--brand-primary) 1.5px, transparent 1.5px);
   background-size: 18px 18px;
 }
 
 .notebook-sheet {
   background-color: var(--bg-card);
+  box-shadow: none;
 }
 
 .page-body {
@@ -95,7 +105,7 @@ body {
 }
 
 .sheet-dotted .page-body {
-  background-image: radial-gradient(var(--brand-cornflower) 1.5px, transparent 1.5px);
+  background-image: radial-gradient(var(--brand-primary) 1.5px, transparent 1.5px);
   background-size: 28px 28px;
 }
 
@@ -119,13 +129,9 @@ body {
 
 .editor-content .section-heading {
   font-weight: 900;
-  color: #930500;
+  color: var(--brand-primary);
   line-height: 28px;
   margin: 0;
-}
-
-html.dark .editor-content .section-heading {
-  color: #95BBEA;
 }
 
 .editor-content .checklist-item {
@@ -145,12 +151,13 @@ html.dark .editor-content .section-heading {
 }
 
 .sticky-note-card {
-  background-color: #FFF8E7;
-  color: #18181C;
-  border: 2px solid #930500;
-  border-top: 8px solid #95BBEA;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  border: 2px solid var(--brand-alert);
+  border-top: 8px solid var(--brand-primary);
   border-radius: 0.5rem;
   padding: 10px;
+  box-shadow: none;
 }
 
 .sticky-note-textarea {
@@ -162,12 +169,38 @@ html.dark .editor-content .section-heading {
   resize: vertical;
   font-size: 13px;
   font-weight: 700;
-  color: #18181C;
+  color: inherit;
   line-height: 1.4;
 }
 
+.bg-alerta {
+  background-color: var(--brand-alert);
+  color: #FFFFFF;
+}
+
+.text-alerta {
+  color: var(--brand-alert);
+}
+
+.border-alerta {
+  border-color: var(--brand-alert);
+}
+
+.alert-banner {
+  background-color: rgba(224, 36, 48, 0.12);
+  border: 2px solid var(--brand-alert);
+  color: var(--text-main);
+  border-radius: 0.75rem;
+}
+
+html.dark .alert-banner {
+  background-color: rgba(245, 54, 66, 0.16);
+  border: 2px solid var(--brand-alert);
+  color: var(--text-main);
+}
+
 *:focus-visible {
-  outline: 3px solid var(--brand-cornflower);
+  outline: 3px solid var(--brand-primary);
   outline-offset: 3px;
 }
 
@@ -181,7 +214,7 @@ input, select {
   }
   body {
     background-color: #FFFFFF !important;
-    color: #18181C !important;
+    color: #1F1F22 !important;
   }
   .notebook-sheet {
     background-color: #FFFFFF !important;
@@ -191,4 +224,54 @@ input, select {
   .page-body {
     margin-left: 12px !important;
   }
+}
+
+.theme-switch {
+  position: relative;
+  width: 54px;
+  height: 26px;
+  border-radius: 9999px;
+  border: 2px solid var(--brand-alert);
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 4px;
+  display: inline-flex;
+  align-items: center;
+  transition: border-color 0.25s ease;
+}
+
+html.dark .theme-switch {
+  border-color: var(--brand-primary);
+}
+
+.theme-switch-knob {
+  position: absolute;
+  left: -2px;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  background-color: var(--brand-alert);
+  color: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+html.dark .theme-switch-knob {
+  transform: translateX(26px);
+  background-color: var(--brand-primary);
+}
+
+.theme-switch .icon-moon {
+  display: none;
+}
+
+html.dark .theme-switch .icon-sun {
+  display: none;
+}
+
+html.dark .theme-switch .icon-moon {
+  display: block;
 }
