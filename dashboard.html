@@ -26,49 +26,51 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
+  <a href="#conteudo-principal" class="skip-link">Pular para o conteudo principal</a>
+
   <header class="custom-header py-5 px-8 flex flex-wrap items-center justify-between gap-4">
     <a href="index.html" class="flex items-center gap-3">
       <div class="w-4 h-8 bg-alerta rounded-sm"></div>
       <h1 class="text-2xl font-black text-sangria tracking-tight">Mochila Inteligente</h1>
     </a>
     <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-cornflower">
-        <button onclick="changeFontSize(-1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition">Menor</button>
-        <button onclick="changeFontSize(0)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition">Padrao</button>
-        <button onclick="changeFontSize(1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition">Maior</button>
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-cornflower" role="group" aria-label="Controles de acessibilidade">
+        <button type="button" onclick="changeFontSize(-1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Diminuir fonte">Menor</button>
+        <button type="button" onclick="changeFontSize(0)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Restaurar fonte padrao">Padrao</button>
+        <button type="button" onclick="changeFontSize(1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Aumentar fonte">Maior</button>
         <button type="button" onclick="toggleTheme()" class="theme-switch" aria-label="Alternar tema">
-  <span class="theme-switch-knob">
-    <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <circle cx="12" cy="12" r="5"></circle>
-      <polygon points="12,1 10.5,5 13.5,5"></polygon>
-      <polygon points="12,23 10.5,19 13.5,19"></polygon>
-      <polygon points="1,12 5,10.5 5,13.5"></polygon>
-      <polygon points="23,12 19,10.5 19,13.5"></polygon>
-      <polygon points="4.2,4.2 7.8,6.2 6.2,7.8"></polygon>
-      <polygon points="19.8,19.8 16.2,17.8 17.8,16.2"></polygon>
-      <polygon points="19.8,4.2 16.2,6.2 17.8,7.8"></polygon>
-      <polygon points="4.2,19.8 7.8,17.8 6.2,16.2"></polygon>
-    </svg>
-    <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M13.5 4.5a7.5 7.5 0 1 0 6 12 6.5 6.5 0 0 1-6-12z"></path>
-      <path d="M17.5 7l.7 1.5 1.5.7-1.5.7-.7 1.5-.7-1.5-1.5-.7 1.5-.7z"></path>
-      <path d="M20.5 11.5l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5z"></path>
-    </svg>
-  </span>
-</button>
+          <span class="theme-switch-knob">
+            <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"></circle>
+              <polygon points="12,1 10.5,5 13.5,5"></polygon>
+              <polygon points="12,23 10.5,19 13.5,19"></polygon>
+              <polygon points="1,12 5,10.5 5,13.5"></polygon>
+              <polygon points="23,12 19,10.5 19,13.5"></polygon>
+              <polygon points="4.2,4.2 7.8,6.2 6.2,7.8"></polygon>
+              <polygon points="19.8,19.8 16.2,17.8 17.8,16.2"></polygon>
+              <polygon points="19.8,4.2 16.2,6.2 17.8,7.8"></polygon>
+              <polygon points="4.2,19.8 7.8,17.8 6.2,16.2"></polygon>
+            </svg>
+            <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M13.5 4.5a7.5 7.5 0 1 0 6 12 6.5 6.5 0 0 1-6-12z"></path>
+              <path d="M17.5 7l.7 1.5 1.5.7-1.5.7-.7 1.5-.7-1.5-1.5-.7 1.5-.7z"></path>
+              <path d="M20.5 11.5l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5z"></path>
+            </svg>
+          </span>
+        </button>
       </div>
       <a href="index.html" class="px-4 py-2 rounded-lg border-2 border-alerta text-alerta font-black text-xs uppercase tracking-wider hover:bg-alerta hover:text-cosmic transition">Sair</a>
     </div>
   </header>
 
-  <main class="flex-grow container mx-auto px-6 py-10 max-w-6xl">
+  <main id="conteudo-principal" class="flex-grow container mx-auto px-6 py-10 max-w-6xl">
     
     <section class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b-2 border-cornflower pb-6">
       <div>
         <span class="inline-block bg-alerta text-cosmic text-xs font-black px-3 py-1 rounded mb-2 uppercase tracking-wider">Armario Digital</span>
         <h2 class="text-3xl md:text-4xl font-black text-sangria">Minhas Materias e Cadernos</h2>
       </div>
-      <span id="counter-box" class="text-xs font-black bg-cornflower text-charcoal px-4 py-2 rounded-lg">0 Materias | 0 Cadernos</span>
+      <span id="counter-box" aria-live="polite" class="text-xs font-black bg-cornflower text-charcoal px-4 py-2 rounded-lg">0 Materias | 0 Cadernos</span>
     </section>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -128,24 +130,31 @@
       </div>
 
       <div class="lg:col-span-2 space-y-6">
-        <div class="custom-card p-6">
-          <h3 class="text-sm font-black uppercase tracking-wider mb-4 text-sangria">Filtrar Cadernos por Semestre</h3>
-          <div class="flex flex-wrap gap-2" id="semesters-nav">
-            <button onclick="filterSemester('todos')" class="px-3.5 py-2 rounded-lg bg-sangria text-cosmic font-black text-xs uppercase tracking-wider">Todos</button>
-            <button onclick="filterSemester('1 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">1 Semestre</button>
-            <button onclick="filterSemester('2 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">2 Semestre</button>
-            <button onclick="filterSemester('3 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">3 Semestre</button>
-            <button onclick="filterSemester('4 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">4 Semestre</button>
-            <button onclick="filterSemester('5 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">5 Semestre</button>
-            <button onclick="filterSemester('6 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">6 Semestre</button>
-            <button onclick="filterSemester('7 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">7 Semestre</button>
-            <button onclick="filterSemester('8 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">8 Semestre</button>
-            <button onclick="filterSemester('9 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">9 Semestre</button>
-            <button onclick="filterSemester('10 Semestre')" class="px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">10 Semestre</button>
+        <div class="custom-card p-6 space-y-5">
+          <div>
+            <label for="search-input" class="block text-xs font-black uppercase tracking-wider mb-2 text-sangria">Buscar no Armario</label>
+            <input type="search" id="search-input" oninput="handleSearch(this.value)" placeholder="Buscar materia ou caderno..." class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+          </div>
+
+          <div>
+            <h3 class="text-xs font-black uppercase tracking-wider mb-3 text-sangria">Filtrar Cadernos por Semestre</h3>
+            <div class="flex flex-wrap gap-2" id="semesters-nav" role="group" aria-label="Filtro por semestre">
+              <button type="button" data-semestre="todos" onclick="filterSemester('todos')" class="semester-btn px-3.5 py-2 rounded-lg bg-sangria text-cosmic font-black text-xs uppercase tracking-wider">Todos</button>
+              <button type="button" data-semestre="1 Semestre" onclick="filterSemester('1 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">1 Semestre</button>
+              <button type="button" data-semestre="2 Semestre" onclick="filterSemester('2 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">2 Semestre</button>
+              <button type="button" data-semestre="3 Semestre" onclick="filterSemester('3 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">3 Semestre</button>
+              <button type="button" data-semestre="4 Semestre" onclick="filterSemester('4 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">4 Semestre</button>
+              <button type="button" data-semestre="5 Semestre" onclick="filterSemester('5 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">5 Semestre</button>
+              <button type="button" data-semestre="6 Semestre" onclick="filterSemester('6 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">6 Semestre</button>
+              <button type="button" data-semestre="7 Semestre" onclick="filterSemester('7 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">7 Semestre</button>
+              <button type="button" data-semestre="8 Semestre" onclick="filterSemester('8 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">8 Semestre</button>
+              <button type="button" data-semestre="9 Semestre" onclick="filterSemester('9 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">9 Semestre</button>
+              <button type="button" data-semestre="10 Semestre" onclick="filterSemester('10 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">10 Semestre</button>
+            </div>
           </div>
         </div>
 
-        <div id="materias-container" class="space-y-6">
+        <div id="materias-container" class="space-y-6" aria-live="polite">
         </div>
       </div>
 

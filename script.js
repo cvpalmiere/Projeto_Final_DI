@@ -1,19 +1,54 @@
 let currentFontSize = parseInt(localStorage.getItem('mochila_font')) || 16;
 let materiasList = JSON.parse(localStorage.getItem('mochila_materias_v6')) || [];
 let activeFilter = 'todos';
+let searchQuery = '';
 
 let currentMateria = null;
 let currentCaderno = null;
 let currentPageIndex = 0;
+let toastTimer = null;
 
 function applySavedPreferences() {
   const savedTheme = localStorage.getItem('mochila_theme');
-  if (savedTheme === 'light') {
+  const isLight = savedTheme === 'light';
+  if (isLight) {
     document.documentElement.classList.remove('dark');
   } else {
     document.documentElement.classList.add('dark');
   }
   document.documentElement.style.fontSize = currentFontSize + 'px';
+  syncThemeSwitchAria();
+}
+
+function syncThemeSwitchAria() {
+  const isDark = document.documentElement.classList.contains('dark');
+  const switches = document.querySelectorAll('.theme-switch');
+  switches.forEach((btn) => {
+    btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+  });
+}
+
+function showToast(message, isAlert) {
+  let toast = document.getElementById('toast-banner');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast-banner';
+    toast.className = 'toast-banner no-print';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  if (isAlert) {
+    toast.classList.add('toast-alert');
+  } else {
+    toast.classList.remove('toast-alert');
+  }
+  toast.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2400);
 }
 
 function changeFontSize(direction) {
@@ -37,14 +72,18 @@ function toggleTheme() {
     htmlEl.classList.add('dark');
     localStorage.setItem('mochila_theme', 'dark');
   }
+  syncThemeSwitchAria();
 }
 
 function toggleFaq(button) {
   const answer = button.nextElementSibling;
-  if (answer.classList.contains('hidden')) {
+  const isHidden = answer.classList.contains('hidden');
+  if (isHidden) {
     answer.classList.remove('hidden');
+    button.setAttribute('aria-expanded', 'true');
   } else {
     answer.classList.add('hidden');
+    button.setAttribute('aria-expanded', 'false');
   }
 }
 
@@ -95,12 +134,32 @@ function updateMateriaSelect() {
   });
 }
 
+function updateSemesterButtonsUI() {
+  const buttons = document.querySelectorAll('.semester-btn');
+  buttons.forEach((btn) => {
+    const sem = btn.getAttribute('data-semestre');
+    if (sem === activeFilter) {
+      btn.className = 'semester-btn px-3.5 py-2 rounded-lg bg-sangria text-cosmic font-black text-xs uppercase tracking-wider transition';
+      btn.setAttribute('aria-pressed', 'true');
+    } else {
+      btn.className = 'semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition';
+      btn.setAttribute('aria-pressed', 'false');
+    }
+  });
+}
+
+function handleSearch(value) {
+  searchQuery = value.trim().toLowerCase();
+  renderDashboard();
+}
+
 function renderDashboard() {
   const container = document.getElementById('materias-container');
   const counterBox = document.getElementById('counter-box');
   if (!container) return;
 
   updateMateriaSelect();
+  updateSemesterButtonsUI();
   container.innerHTML = '';
 
   let totalCadernos = 0;
@@ -125,10 +184,22 @@ function renderDashboard() {
     return;
   }
 
+  let visibleMaterias = 0;
+
   materiasList.forEach((materia) => {
-    const filteredCadernos = activeFilter === 'todos'
-      ? materia.cadernos
-      : materia.cadernos.filter((c) => c.semestre === activeFilter);
+    const materiaMatchesSearch = searchQuery === '' || materia.nome.toLowerCase().includes(searchQuery);
+
+    const filteredCadernos = materia.cadernos.filter((c) => {
+      const matchesSemester = activeFilter === 'todos' || c.semestre === activeFilter;
+      const matchesText = searchQuery === '' || materiaMatchesSearch || c.titulo.toLowerCase().includes(searchQuery);
+      return matchesSemester && matchesText;
+    });
+
+    if (searchQuery !== '' && !materiaMatchesSearch && filteredCadernos.length === 0) {
+      return;
+    }
+
+    visibleMaterias += 1;
 
     const section = document.createElement('div');
     section.className = 'custom-card p-6 space-y-5';
@@ -181,6 +252,16 @@ function renderDashboard() {
 
     container.appendChild(section);
   });
+
+  if (visibleMaterias === 0) {
+    container.innerHTML = `
+      <div class="alert-banner p-8 text-center">
+        <span class="inline-block bg-alerta text-cosmic text-xs font-black px-2.5 py-1 rounded mb-3 uppercase tracking-wider">Busca</span>
+        <p class="text-base font-black mb-1">Nenhum resultado encontrado</p>
+        <p class="text-sm opacity-85">Tente outro termo de pesquisa ou limpe o filtro de semestre.</p>
+      </div>
+    `;
+  }
 }
 
 function handleMateriaSubmit(event) {
@@ -198,6 +279,7 @@ function handleMateriaSubmit(event) {
   saveMaterias();
   input.value = '';
   renderDashboard();
+  showToast('Materia criada com sucesso', false);
 }
 
 function handleCadernoSubmit(event) {
@@ -221,12 +303,14 @@ function handleCadernoSubmit(event) {
   saveMaterias();
   tituloInput.value = '';
   renderDashboard();
+  showToast('Caderno adicionado', false);
 }
 
 function removeMateria(materiaId) {
   materiasList = materiasList.filter((m) => m.id !== materiaId);
   saveMaterias();
   renderDashboard();
+  showToast('Materia removida', true);
 }
 
 function removeCaderno(materiaId, cadernoId) {
@@ -235,6 +319,7 @@ function removeCaderno(materiaId, cadernoId) {
   materia.cadernos = materia.cadernos.filter((c) => c.id !== cadernoId);
   saveMaterias();
   renderDashboard();
+  showToast('Caderno removido', true);
 }
 
 function filterSemester(semestre) {
@@ -323,6 +408,8 @@ function renderPageTabs() {
       ? 'w-10 h-10 rounded-lg bg-sangria text-cosmic font-black text-xs'
       : 'w-10 h-10 rounded-lg custom-card font-black text-xs hover:bg-cornflower hover:text-charcoal transition';
     btn.textContent = index + 1;
+    btn.setAttribute('aria-label', `Ir para pagina ${index + 1}`);
+    btn.setAttribute('aria-current', isActive ? 'page' : 'false');
     btn.onclick = () => {
       currentPageIndex = index;
       renderCurrentPage();
@@ -347,7 +434,7 @@ function renderStickyNotes() {
         <span class="text-[10px] font-black uppercase tracking-wider text-alerta">Nota</span>
         <button type="button" onclick="removeStickyNote(${nota.id})" class="text-[10px] font-black uppercase text-alerta hover:underline no-print">Remover</button>
       </div>
-      <textarea oninput="updateStickyNote(${nota.id}, this.value)" placeholder="Escreva um lembrete..." class="sticky-note-textarea">${nota.texto || ''}</textarea>
+      <textarea oninput="updateStickyNote(${nota.id}, this.value)" aria-label="Texto da nota adesiva" placeholder="Escreva um lembrete..." class="sticky-note-textarea">${nota.texto || ''}</textarea>
     `;
     zone.appendChild(card);
   });
@@ -372,6 +459,7 @@ function changeSheetStyle(newStyle) {
   applySheetClass(newStyle);
   saveMaterias();
   updateSaveBadge('Salvo');
+  showToast('Estilo de folha atualizado', false);
 }
 
 function changeEditorTextSize(sizeValue) {
@@ -406,7 +494,7 @@ function insertChecklist() {
   editor.focus();
   const itemEl = document.createElement('div');
   itemEl.className = 'checklist-item';
-  itemEl.innerHTML = '<input type="checkbox"><span>Novo item de estudo</span>';
+  itemEl.innerHTML = '<input type="checkbox" aria-label="Marcar item"><span>Novo item de estudo</span>';
   editor.appendChild(itemEl);
   handleEditorInput();
 }
@@ -419,6 +507,7 @@ function addStickyNote() {
   saveMaterias();
   renderStickyNotes();
   updateSaveBadge('Salvo');
+  showToast('Nota adesiva adicionada', false);
 }
 
 function updateStickyNote(noteId, textValue) {
@@ -438,6 +527,7 @@ function removeStickyNote(noteId) {
   page.notas = page.notas.filter((n) => n.id !== noteId);
   saveMaterias();
   renderStickyNotes();
+  showToast('Nota removida', true);
 }
 
 function addNewPage() {
@@ -447,6 +537,7 @@ function addNewPage() {
   saveMaterias();
   renderCurrentPage();
   renderPageTabs();
+  showToast('Nova pagina criada', false);
 }
 
 function deleteCurrentPage() {
@@ -458,6 +549,7 @@ function deleteCurrentPage() {
   saveMaterias();
   renderCurrentPage();
   renderPageTabs();
+  showToast('Pagina removida', true);
 }
 
 function exportNotebookPdf() {

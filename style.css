@@ -40,6 +40,25 @@ body {
   padding: 0;
 }
 
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background-color: var(--brand-primary);
+  color: #FFFFFF;
+  padding: 10px 16px;
+  border-radius: 0.5rem;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  z-index: 100;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 16px;
+}
+
 .custom-card {
   background-color: var(--bg-card);
   border: 2px solid var(--border-neutral);
@@ -199,33 +218,6 @@ html.dark .alert-banner {
   color: var(--text-main);
 }
 
-*:focus-visible {
-  outline: 3px solid var(--brand-primary);
-  outline-offset: 3px;
-}
-
-input, select {
-  color: inherit;
-}
-
-@media print {
-  .no-print {
-    display: none !important;
-  }
-  body {
-    background-color: #FFFFFF !important;
-    color: #1F1F22 !important;
-  }
-  .notebook-sheet {
-    background-color: #FFFFFF !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-  .page-body {
-    margin-left: 12px !important;
-  }
-}
-
 .theme-switch {
   position: relative;
   width: 54px;
@@ -274,4 +266,69 @@ html.dark .theme-switch .icon-sun {
 
 html.dark .theme-switch .icon-moon {
   display: block;
+}
+
+.faq-icon {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+button[aria-expanded="true"] .faq-icon {
+  transform: rotate(45deg);
+}
+
+.toast-banner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--brand-primary);
+  color: #FFFFFF;
+  border: 2px solid var(--border-neutral);
+  padding: 12px 20px;
+  border-radius: 0.75rem;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 90;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.toast-banner.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-banner.toast-alert {
+  background-color: var(--brand-alert);
+}
+
+*:focus-visible {
+  outline: 3px solid var(--brand-primary);
+  outline-offset: 3px;
+}
+
+input, select {
+  color: inherit;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background-color: #FFFFFF !important;
+    color: #1F1F22 !important;
+  }
+  .notebook-sheet {
+    background-color: #FFFFFF !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .page-body {
+    margin-left: 12px !important;
+  }
 }
