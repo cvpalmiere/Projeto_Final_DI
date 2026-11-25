@@ -133,4 +133,4 @@ Tudo fica no localStorage do navegador. As chaves são mochila_materias_v6, moch
 * 10 heurísticas de usabilidade, Nielsen Norman Group: https://www.nngroup.com/articles/ten-usability-heuristics/
 * WebAIM Contrast Checker: https://webaim.org/resources/contrastchecker/
 * Tailwind CSS: https://tailwindcss.com/docs
-* Lovable, DeepSeek, Pinterest, Gemini e Claude, conforme descrito no relatório.
+* Lovable, DeepSeek, Pinterest, Gemini
