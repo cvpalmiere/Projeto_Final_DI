@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8">
@@ -11,12 +11,12 @@
       theme: {
         extend: {
           colors: {
-            cosmic: 'var(--text-on-primary)',
-            sangria: 'var(--brand-primary)',
-            cornflower: 'var(--brand-accent)',
-            charcoal: 'var(--text-on-accent)',
-            carddark: 'var(--bg-card)',
-            alerta: 'var(--brand-alert)'
+            'on-primary': 'var(--text-on-primary)',
+            primary: 'var(--brand-primary)',
+            accent: 'var(--brand-accent)',
+            'on-accent': 'var(--text-on-accent)',
+            surface: 'var(--bg-card)',
+            danger: 'var(--brand-danger)'
           }
         }
       }
@@ -26,24 +26,26 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <a href="#conteudo-principal" class="skip-link no-print">Pular para o conteudo principal</a>
+  <a href="#conteudo-principal" class="skip-link no-print">Pular para o conteúdo principal</a>
+
+  <a href="#conteudo-principal" class="skip-link no-print">Pular para o conteúdo principal</a>
 
   <header class="custom-header py-4 px-6 flex flex-wrap items-center justify-between gap-4 no-print">
     <div class="flex items-center gap-4">
-      <a href="dashboard.html" class="px-4 py-2 rounded-lg border-2 border-cornflower font-black text-xs uppercase tracking-wider hover:bg-cornflower hover:text-charcoal transition">Voltar ao Armario</a>
+      <a href="dashboard.html" class="px-4 py-2 rounded-lg border-2 border-accent font-black text-xs uppercase tracking-wider hover:bg-accent hover:text-on-accent transition">Voltar ao Armário</a>
       <div>
-        <h1 id="editor-caderno-titulo" class="text-lg font-black text-sangria leading-tight">Caderno</h1>
-        <p id="editor-caderno-subtitulo" class="text-xs font-bold opacity-80">Materia | Semestre</p>
+        <h1 id="editor-caderno-titulo" class="text-lg font-black text-primary leading-tight">Caderno</h1>
+        <p id="editor-caderno-subtitulo" class="text-xs font-bold opacity-80">Matéria | Semestre</p>
       </div>
     </div>
 
     <div class="flex flex-wrap items-center gap-3">
-      <span id="save-status" aria-live="polite" class="text-xs font-black px-3 py-1.5 rounded-lg bg-cornflower text-charcoal">Salvo</span>
-      <button type="button" onclick="exportNotebookPdf()" class="px-4 py-2 rounded-lg bg-alerta text-cosmic font-black text-xs uppercase tracking-wider hover:opacity-90 transition">Exportar PDF</button>
-      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-cornflower" role="group" aria-label="Controles de acessibilidade">
-        <button type="button" onclick="changeFontSize(-1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Diminuir fonte">Menor</button>
-        <button type="button" onclick="changeFontSize(0)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Restaurar fonte padrao">Padrao</button>
-        <button type="button" onclick="changeFontSize(1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Aumentar fonte">Maior</button>
+      <span id="save-status" aria-live="polite" class="text-xs font-black px-3 py-1.5 rounded-lg bg-accent text-on-accent">Salvo</span>
+      <button type="button" onclick="exportNotebookPdf()" class="px-4 py-2 rounded-lg bg-danger text-on-primary font-black text-xs uppercase tracking-wider hover:opacity-90 transition">Exportar PDF</button>
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-accent" role="group" aria-label="Controles de acessibilidade">
+        <button type="button" onclick="changeFontSize(-1)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Diminuir fonte">Menor</button>
+        <button type="button" onclick="changeFontSize(0)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Restaurar fonte padrão">Padrão</button>
+        <button type="button" onclick="changeFontSize(1)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Aumentar fonte">Maior</button>
         <button type="button" onclick="toggleTheme()" class="theme-switch" aria-label="Alternar tema">
           <span class="theme-switch-knob">
             <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -68,19 +70,19 @@
     </div>
   </header>
 
-  <section id="editor-toolbar" aria-label="Ferramentas de edicao" class="custom-card mx-auto mt-6 px-5 py-3 w-[95%] max-w-5xl flex flex-wrap items-center justify-between gap-3 no-print">
+  <section id="editor-toolbar" aria-label="Ferramentas de edição" class="custom-card mx-auto mt-6 px-5 py-3 w-[95%] max-w-5xl flex flex-wrap items-center justify-between gap-3 no-print">
     <div class="flex flex-wrap items-center gap-2">
-      <select id="editor-pauta-select" aria-label="Estilo de folha" onchange="changeSheetStyle(this.value)" class="px-3 py-2 rounded-lg border-2 border-cornflower bg-transparent text-xs font-black outline-none">
-        <option value="Com pauta" class="bg-carddark text-charcoal">Com pauta</option>
-        <option value="Sem pauta" class="bg-carddark text-charcoal">Sem pauta</option>
-        <option value="Quadriculado" class="bg-carddark text-charcoal">Quadriculado</option>
-        <option value="Pontilhado" class="bg-carddark text-charcoal">Pontilhado</option>
+      <select id="editor-pauta-select" aria-label="Estilo de folha" onchange="changeSheetStyle(this.value)" class="px-3 py-2 rounded-lg border-2 border-accent bg-transparent text-xs font-black">
+        <option value="Com pauta" class="bg-surface text-on-accent">Com pauta</option>
+        <option value="Sem pauta" class="bg-surface text-on-accent">Sem pauta</option>
+        <option value="Quadriculado" class="bg-surface text-on-accent">Quadriculado</option>
+        <option value="Pontilhado" class="bg-surface text-on-accent">Pontilhado</option>
       </select>
 
-      <select id="editor-size-select" aria-label="Tamanho do texto da folha" onchange="changeEditorTextSize(this.value)" class="px-3 py-2 rounded-lg border-2 border-cornflower bg-transparent text-xs font-black outline-none">
-        <option value="16" class="bg-carddark text-charcoal">Texto 16</option>
-        <option value="18" class="bg-carddark text-charcoal">Texto 18</option>
-        <option value="20" class="bg-carddark text-charcoal">Texto 20</option>
+      <select id="editor-size-select" aria-label="Tamanho do texto da folha" onchange="changeEditorTextSize(this.value)" class="px-3 py-2 rounded-lg border-2 border-accent bg-transparent text-xs font-black">
+        <option value="16" class="bg-surface text-on-accent">Texto 16</option>
+        <option value="18" class="bg-surface text-on-accent">Texto 18</option>
+        <option value="20" class="bg-surface text-on-accent">Texto 20</option>
       </select>
 
       <label class="color-picker-wrap" for="editor-color-picker">
@@ -88,47 +90,49 @@
         <input type="color" id="editor-color-picker" value="#1155CC" oninput="changeTextColor(this.value)" onchange="changeTextColor(this.value)" aria-label="Escolher cor do texto" class="color-picker-input">
       </label>
 
-      <button type="button" onclick="formatBold()" class="px-3 py-2 rounded-lg border-2 border-cornflower font-black text-xs hover:bg-cornflower hover:text-charcoal transition">Negrito</button>
-      <button type="button" onclick="insertSectionTitle()" class="px-3 py-2 rounded-lg border-2 border-cornflower font-black text-xs hover:bg-cornflower hover:text-charcoal transition">Titulo de Secao</button>
-      <button type="button" onclick="insertChecklist()" class="px-3 py-2 rounded-lg border-2 border-cornflower font-black text-xs hover:bg-cornflower hover:text-charcoal transition">Checklist</button>
-      <button type="button" onclick="addStickyNote()" class="px-3 py-2 rounded-lg bg-cornflower text-charcoal font-black text-xs hover:opacity-90 transition">Post it</button>
-      <button type="button" onclick="triggerImageUpload()" class="px-3 py-2 rounded-lg border-2 border-cornflower font-black text-xs hover:bg-cornflower hover:text-charcoal transition">Imagem</button>
+      <button type="button" onmousedown="event.preventDefault()" onclick="formatBold()" class="px-3 py-2 rounded-lg border-2 border-accent font-black text-xs hover:bg-accent hover:text-on-accent transition">Negrito</button>
+      <button type="button" onmousedown="event.preventDefault()" onclick="insertSectionTitle()" class="px-3 py-2 rounded-lg border-2 border-accent font-black text-xs hover:bg-accent hover:text-on-accent transition">Título de Seção</button>
+      <button type="button" onmousedown="event.preventDefault()" onclick="insertChecklist()" class="px-3 py-2 rounded-lg border-2 border-accent font-black text-xs hover:bg-accent hover:text-on-accent transition">Checklist</button>
+      <button type="button" onclick="addStickyNote()" aria-label="Adicionar post it à página" class="px-3 py-2 rounded-lg bg-accent text-on-accent font-black text-xs hover:opacity-90 transition">Post it</button>
+      <button type="button" onclick="triggerImageUpload()" aria-label="Inserir imagem na página" class="px-3 py-2 rounded-lg border-2 border-accent font-black text-xs hover:bg-accent hover:text-on-accent transition">Imagem</button>
       <input type="file" id="editor-image-input" accept="image/*" onchange="handleImageUpload(event)" class="hidden">
-      <button type="button" id="btn-bookmark" onclick="toggleBookmark()" aria-pressed="false" class="px-3 py-2 rounded-lg border-2 border-alerta text-alerta font-black text-xs hover:bg-alerta hover:text-cosmic transition">Marca Pagina</button>
+      <button type="button" id="btn-bookmark" onclick="toggleBookmark()" aria-pressed="false" class="px-3 py-2 rounded-lg border-2 border-danger text-danger font-black text-xs hover:bg-danger hover:text-on-primary transition">Marca Página</button>
     </div>
 
     <div class="flex items-center gap-2">
-      <button type="button" onclick="addNewPage()" class="px-3 py-2 rounded-lg bg-sangria text-cosmic font-black text-xs uppercase tracking-wider hover:opacity-90 transition">Nova Pagina</button>
-      <button type="button" id="btn-delete-page" onclick="deleteCurrentPage()" class="px-3 py-2 rounded-lg border-2 border-alerta text-alerta font-black text-xs uppercase tracking-wider hover:bg-alerta hover:text-cosmic transition">Excluir Pagina</button>
+      <button type="button" onclick="addNewPage()" class="px-3 py-2 rounded-lg bg-primary text-on-primary font-black text-xs uppercase tracking-wider hover:opacity-90 transition">Nova Página</button>
+      <button type="button" id="btn-delete-page" onclick="deleteCurrentPage()" class="px-3 py-2 rounded-lg border-2 border-danger text-danger font-black text-xs uppercase tracking-wider hover:bg-danger hover:text-on-primary transition">Excluir Página</button>
     </div>
   </section>
 
   <main id="conteudo-principal" class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
     <div id="editor-missing" class="hidden alert-banner p-10 text-center max-w-lg mx-auto">
-      <span class="inline-block bg-alerta text-cosmic text-xs font-black px-2.5 py-1 rounded mb-3 uppercase tracking-wider">Aviso</span>
-      <h2 class="text-2xl font-black mb-3">Caderno nao encontrado</h2>
-      <p class="text-sm opacity-80 mb-6">Selecione um caderno valido no seu armario para iniciar as anotacoes.</p>
-      <a href="dashboard.html" class="inline-block bg-sangria text-cosmic font-black px-6 py-3 rounded-lg text-xs uppercase tracking-wider">Ir para o Armario</a>
+      <span class="inline-block bg-danger text-on-primary text-xs font-black px-2.5 py-1 rounded mb-3 uppercase tracking-wider">Aviso</span>
+      <h2 class="text-2xl font-black mb-3">Caderno não encontrado</h2>
+      <p class="text-sm opacity-80 mb-6">Selecione um caderno válido no seu armário para iniciar as anotações.</p>
+      <a href="dashboard.html" class="inline-block bg-primary text-on-primary font-black px-6 py-3 rounded-lg text-xs uppercase tracking-wider">Ir para o Armário</a>
     </div>
 
     <div id="editor-workspace" class="flex flex-col md:flex-row items-start justify-center gap-4">
-      <div id="notebook-sheet" class="notebook-sheet flex-grow w-full rounded-xl border-2 border-cornflower overflow-hidden">
+      <div id="notebook-sheet" class="notebook-sheet flex-grow w-full rounded-xl border-2 border-accent overflow-hidden">
         <div id="bookmark-ribbon" class="bookmark-ribbon hidden" aria-hidden="true"></div>
-        <div class="px-6 py-3 border-b-2 border-cornflower flex justify-between items-center text-xs font-black uppercase tracking-wider">
-          <span id="sheet-header-label">Materia / Caderno</span>
-          <span id="sheet-page-label" class="mr-10">Pagina 1</span>
+        <div class="px-6 py-3 border-b-2 border-accent flex justify-between items-center text-xs font-black uppercase tracking-wider">
+          <span id="sheet-header-label">Matéria / Caderno</span>
+          <span id="sheet-page-label" class="mr-10">Página 1</span>
         </div>
 
         <div id="page-body" class="page-body relative pl-10 pr-6 py-6">
           <div id="floating-layer" class="floating-layer"></div>
-          <div id="editor-content" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Area de anotacoes do caderno" oninput="handleEditorInput()" onmouseup="saveEditorSelection()" onkeyup="saveEditorSelection()" class="editor-content" data-placeholder="Comece a escrever suas anotacoes sobre a pauta..."></div>
+          <div id="editor-content" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Área de anotações do caderno" oninput="handleEditorInput()" onpaste="handlePaste(event)" class="editor-content" data-placeholder="Comece a escrever suas anotações sobre a pauta..."></div>
         </div>
       </div>
 
-      <aside id="pages-tabs" aria-label="Paginas do caderno" class="flex md:flex-col gap-2 no-print">
+      <aside id="pages-tabs" aria-label="Páginas do caderno" class="flex md:flex-col gap-2 no-print">
       </aside>
     </div>
   </main>
+
+  <div id="print-area" aria-hidden="true"></div>
 
   <footer class="custom-footer py-6 px-8 text-center text-xs font-black uppercase tracking-wider mt-12 no-print">
     <p>Mochila Inteligente</p>

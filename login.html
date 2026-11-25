@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8">
@@ -11,12 +11,12 @@
       theme: {
         extend: {
           colors: {
-            cosmic: 'var(--text-on-primary)',
-            sangria: 'var(--brand-primary)',
-            cornflower: 'var(--brand-accent)',
-            charcoal: 'var(--text-on-accent)',
-            carddark: 'var(--bg-card)',
-            alerta: 'var(--brand-alert)'
+            'on-primary': 'var(--text-on-primary)',
+            primary: 'var(--brand-primary)',
+            accent: 'var(--brand-accent)',
+            'on-accent': 'var(--text-on-accent)',
+            surface: 'var(--bg-card)',
+            danger: 'var(--brand-danger)'
           }
         }
       }
@@ -26,18 +26,18 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <a href="#conteudo-principal" class="skip-link">Pular para o conteudo principal</a>
+  <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
 
   <header class="custom-header py-5 px-8 flex flex-wrap items-center justify-between gap-4">
     <a href="index.html" class="flex items-center gap-3">
-      <div class="w-4 h-8 bg-alerta rounded-sm"></div>
-      <h1 class="text-2xl font-black text-sangria tracking-tight">Mochila Inteligente</h1>
+      <div class="w-4 h-8 bg-danger rounded-sm"></div>
+      <h1 class="text-2xl font-black text-primary tracking-tight">Mochila Inteligente</h1>
     </a>
     <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-cornflower" role="group" aria-label="Controles de acessibilidade">
-        <button type="button" onclick="changeFontSize(-1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Diminuir fonte">Menor</button>
-        <button type="button" onclick="changeFontSize(0)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Restaurar fonte padrao">Padrao</button>
-        <button type="button" onclick="changeFontSize(1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Aumentar fonte">Maior</button>
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-accent" role="group" aria-label="Controles de acessibilidade">
+        <button type="button" onclick="changeFontSize(-1)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Diminuir fonte">Menor</button>
+        <button type="button" onclick="changeFontSize(0)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Restaurar fonte padrão">Padrão</button>
+        <button type="button" onclick="changeFontSize(1)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Aumentar fonte">Maior</button>
         <button type="button" onclick="toggleTheme()" class="theme-switch" aria-label="Alternar tema">
           <span class="theme-switch-knob">
             <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -59,30 +59,30 @@
           </span>
         </button>
       </div>
-      <a href="index.html" class="px-4 py-2 rounded-lg border-2 border-cornflower font-black text-xs uppercase tracking-wider hover:bg-cornflower hover:text-charcoal transition">Inicio</a>
+      <a href="index.html" class="px-4 py-2 rounded-lg border-2 border-accent font-black text-xs uppercase tracking-wider hover:bg-accent hover:text-on-accent transition">Início</a>
     </div>
   </header>
 
   <main id="conteudo-principal" class="flex-grow flex items-center justify-center px-6 py-12">
     <div class="custom-card p-8 md:p-10 w-full max-w-md">
-      <span class="inline-block bg-alerta text-cosmic text-xs font-black px-3 py-1 rounded mb-4 uppercase tracking-wider">Acesso ao Armario</span>
-      <h2 class="text-3xl font-black text-sangria mb-2">Entrar na conta</h2>
+      <span class="inline-block bg-danger text-on-primary text-xs font-black px-3 py-1 rounded mb-4 uppercase tracking-wider">Acesso ao Armário</span>
+      <h2 class="text-3xl font-black text-primary mb-2">Entrar na conta</h2>
       <p class="text-sm opacity-80 mb-8">Informe suas credenciais para abrir seus semestres e cadernos digitais.</p>
 
       <form onsubmit="handleLogin(event)" class="space-y-5">
         <div>
-          <label for="login-email" class="block text-xs font-black uppercase tracking-wider mb-2">Email Academico</label>
-          <input type="email" id="login-email" required autocomplete="email" placeholder="estudante@instituicao.edu.br" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+          <label for="login-email" class="block text-xs font-black uppercase tracking-wider mb-2">Email Acadêmico</label>
+          <input type="email" id="login-email" required autocomplete="email" placeholder="estudante@instituicao.edu.br" class="w-full px-4 py-3 rounded-lg border-2 border-accent bg-transparent text-sm font-bold">
         </div>
         <div>
           <label for="login-senha" class="block text-xs font-black uppercase tracking-wider mb-2">Senha</label>
-          <input type="password" id="login-senha" required autocomplete="current-password" placeholder="Digite sua senha" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+          <input type="password" id="login-senha" required autocomplete="current-password" placeholder="Digite sua senha" class="w-full px-4 py-3 rounded-lg border-2 border-accent bg-transparent text-sm font-bold">
         </div>
-        <button type="submit" class="w-full bg-sangria text-cosmic font-black py-3.5 px-4 rounded-lg hover:opacity-90 transition uppercase tracking-wider text-sm">Acessar Painel</button>
+        <button type="submit" class="w-full bg-primary text-on-primary font-black py-3.5 px-4 rounded-lg hover:opacity-90 transition uppercase tracking-wider text-sm">Acessar Painel</button>
       </form>
 
-      <div class="mt-6 pt-6 border-t-2 border-cornflower text-center">
-        <a href="dashboard.html" class="text-xs font-black uppercase tracking-wider text-alerta hover:underline">Entrar como visitante no painel</a>
+      <div class="mt-6 pt-6 border-t-2 border-accent text-center">
+        <a href="dashboard.html" class="text-xs font-black uppercase tracking-wider text-danger hover:underline">Entrar como visitante no painel</a>
       </div>
     </div>
   </main>

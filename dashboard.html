@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8">
@@ -11,12 +11,12 @@
       theme: {
         extend: {
           colors: {
-            cosmic: 'var(--text-on-primary)',
-            sangria: 'var(--brand-primary)',
-            cornflower: 'var(--brand-accent)',
-            charcoal: 'var(--text-on-accent)',
-            carddark: 'var(--bg-card)',
-            alerta: 'var(--brand-alert)'
+            'on-primary': 'var(--text-on-primary)',
+            primary: 'var(--brand-primary)',
+            accent: 'var(--brand-accent)',
+            'on-accent': 'var(--text-on-accent)',
+            surface: 'var(--bg-card)',
+            danger: 'var(--brand-danger)'
           }
         }
       }
@@ -26,18 +26,18 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <a href="#conteudo-principal" class="skip-link">Pular para o conteudo principal</a>
+  <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
 
   <header class="custom-header py-5 px-8 flex flex-wrap items-center justify-between gap-4">
     <a href="index.html" class="flex items-center gap-3">
-      <div class="w-4 h-8 bg-alerta rounded-sm"></div>
-      <h1 class="text-2xl font-black text-sangria tracking-tight">Mochila Inteligente</h1>
+      <div class="w-4 h-8 bg-danger rounded-sm"></div>
+      <h1 class="text-2xl font-black text-primary tracking-tight">Mochila Inteligente</h1>
     </a>
     <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-cornflower" role="group" aria-label="Controles de acessibilidade">
-        <button type="button" onclick="changeFontSize(-1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Diminuir fonte">Menor</button>
-        <button type="button" onclick="changeFontSize(0)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Restaurar fonte padrao">Padrao</button>
-        <button type="button" onclick="changeFontSize(1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Aumentar fonte">Maior</button>
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-accent" role="group" aria-label="Controles de acessibilidade">
+        <button type="button" onclick="changeFontSize(-1)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Diminuir fonte">Menor</button>
+        <button type="button" onclick="changeFontSize(0)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Restaurar fonte padrão">Padrão</button>
+        <button type="button" onclick="changeFontSize(1)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Aumentar fonte">Maior</button>
         <button type="button" onclick="toggleTheme()" class="theme-switch" aria-label="Alternar tema">
           <span class="theme-switch-knob">
             <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -59,72 +59,72 @@
           </span>
         </button>
       </div>
-      <a href="index.html" class="px-4 py-2 rounded-lg border-2 border-alerta text-alerta font-black text-xs uppercase tracking-wider hover:bg-alerta hover:text-cosmic transition">Sair</a>
+      <a href="index.html" onclick="sair()" class="px-4 py-2 rounded-lg border-2 border-danger text-danger font-black text-xs uppercase tracking-wider hover:bg-danger hover:text-on-primary transition">Sair</a>
     </div>
   </header>
 
   <main id="conteudo-principal" class="flex-grow container mx-auto px-6 py-10 max-w-6xl">
     
-    <section class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b-2 border-cornflower pb-6">
+    <section class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b-2 border-accent pb-6">
       <div>
-        <span class="inline-block bg-alerta text-cosmic text-xs font-black px-3 py-1 rounded mb-2 uppercase tracking-wider">Armario Digital</span>
-        <h2 class="text-3xl md:text-4xl font-black text-sangria">Minhas Materias e Cadernos</h2>
+        <span class="inline-block bg-danger text-on-primary text-xs font-black px-3 py-1 rounded mb-2 uppercase tracking-wider">Armário Digital</span>
+        <h2 class="text-3xl md:text-4xl font-black text-primary">Minhas Matérias e Cadernos</h2>
       </div>
-      <span id="counter-box" aria-live="polite" class="text-xs font-black bg-cornflower text-charcoal px-4 py-2 rounded-lg">0 Materias | 0 Cadernos</span>
+      <span id="counter-box" aria-live="polite" class="text-xs font-black bg-accent text-on-accent px-4 py-2 rounded-lg">0 Matérias | 0 Cadernos</span>
     </section>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       
       <div class="lg:col-span-1 space-y-6">
         <div class="custom-card p-6">
-          <h3 class="text-xl font-black mb-5 text-sangria pb-3 border-b-2 border-cornflower">Nova Materia</h3>
+          <h3 class="text-xl font-black mb-5 text-primary pb-3 border-b-2 border-accent">Nova Matéria</h3>
           <form onsubmit="handleMateriaSubmit(event)" class="space-y-4">
             <div>
-              <label for="materia-nome" class="block text-xs font-black uppercase tracking-wider mb-2">Nome da Materia</label>
-              <input type="text" id="materia-nome" required placeholder="Ex: Banco de Dados" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+              <label for="materia-nome" class="block text-xs font-black uppercase tracking-wider mb-2">Nome da Matéria</label>
+              <input type="text" id="materia-nome" required placeholder="Ex: Banco de Dados" class="w-full px-4 py-3 rounded-lg border-2 border-accent bg-transparent text-sm font-bold">
             </div>
-            <button type="submit" class="w-full bg-sangria text-cosmic font-black py-3 px-4 rounded-lg hover:opacity-90 transition uppercase tracking-wider text-sm">Criar Materia</button>
+            <button type="submit" class="w-full bg-primary text-on-primary font-black py-3 px-4 rounded-lg hover:opacity-90 transition uppercase tracking-wider text-sm">Criar Matéria</button>
           </form>
         </div>
 
         <div class="custom-card p-6">
-          <h3 class="text-xl font-black mb-5 text-sangria pb-3 border-b-2 border-cornflower">Novo Caderno</h3>
+          <h3 class="text-xl font-black mb-5 text-primary pb-3 border-b-2 border-accent">Novo Caderno</h3>
           <form onsubmit="handleCadernoSubmit(event)" class="space-y-4">
             <div>
-              <label for="caderno-materia" class="block text-xs font-black uppercase tracking-wider mb-2">Materia Vinculada</label>
-              <select id="caderno-materia" required class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
-                <option value="" class="bg-carddark text-charcoal">Crie uma materia primeiro</option>
+              <label for="caderno-materia" class="block text-xs font-black uppercase tracking-wider mb-2">Matéria Vinculada</label>
+              <select id="caderno-materia" required class="w-full px-4 py-3 rounded-lg border-2 border-accent bg-transparent text-sm font-bold">
+                <option value="" class="bg-surface text-on-accent">Crie uma matéria primeiro</option>
               </select>
             </div>
             <div>
-              <label for="caderno-titulo" class="block text-xs font-black uppercase tracking-wider mb-2">Titulo do Caderno</label>
-              <input type="text" id="caderno-titulo" required placeholder="Ex: Anotacoes de Aula" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+              <label for="caderno-titulo" class="block text-xs font-black uppercase tracking-wider mb-2">Título do Caderno</label>
+              <input type="text" id="caderno-titulo" required placeholder="Ex: Anotações de Aula" class="w-full px-4 py-3 rounded-lg border-2 border-accent bg-transparent text-sm font-bold">
             </div>
             <div>
               <label for="caderno-semestre" class="block text-xs font-black uppercase tracking-wider mb-2">Semestre</label>
-              <select id="caderno-semestre" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
-                <option value="1 Semestre" class="bg-carddark text-charcoal">1 Semestre</option>
-                <option value="2 Semestre" class="bg-carddark text-charcoal">2 Semestre</option>
-                <option value="3 Semestre" class="bg-carddark text-charcoal">3 Semestre</option>
-                <option value="4 Semestre" class="bg-carddark text-charcoal">4 Semestre</option>
-                <option value="5 Semestre" class="bg-carddark text-charcoal">5 Semestre</option>
-                <option value="6 Semestre" class="bg-carddark text-charcoal">6 Semestre</option>
-                <option value="7 Semestre" class="bg-carddark text-charcoal">7 Semestre</option>
-                <option value="8 Semestre" class="bg-carddark text-charcoal">8 Semestre</option>
-                <option value="9 Semestre" class="bg-carddark text-charcoal">9 Semestre</option>
-                <option value="10 Semestre" class="bg-carddark text-charcoal">10 Semestre</option>
+              <select id="caderno-semestre" class="w-full px-4 py-3 rounded-lg border-2 border-accent bg-transparent text-sm font-bold">
+                <option value="1º Semestre" class="bg-surface text-on-accent">1º Semestre</option>
+                <option value="2º Semestre" class="bg-surface text-on-accent">2º Semestre</option>
+                <option value="3º Semestre" class="bg-surface text-on-accent">3º Semestre</option>
+                <option value="4º Semestre" class="bg-surface text-on-accent">4º Semestre</option>
+                <option value="5º Semestre" class="bg-surface text-on-accent">5º Semestre</option>
+                <option value="6º Semestre" class="bg-surface text-on-accent">6º Semestre</option>
+                <option value="7º Semestre" class="bg-surface text-on-accent">7º Semestre</option>
+                <option value="8º Semestre" class="bg-surface text-on-accent">8º Semestre</option>
+                <option value="9º Semestre" class="bg-surface text-on-accent">9º Semestre</option>
+                <option value="10º Semestre" class="bg-surface text-on-accent">10º Semestre</option>
               </select>
             </div>
             <div>
               <label for="caderno-pauta" class="block text-xs font-black uppercase tracking-wider mb-2">Estilo de Folha</label>
-              <select id="caderno-pauta" class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
-                <option value="Com pauta" class="bg-carddark text-charcoal">Com pauta</option>
-                <option value="Sem pauta" class="bg-carddark text-charcoal">Sem pauta</option>
-                <option value="Quadriculado" class="bg-carddark text-charcoal">Quadriculado</option>
-                <option value="Pontilhado" class="bg-carddark text-charcoal">Pontilhado</option>
+              <select id="caderno-pauta" class="w-full px-4 py-3 rounded-lg border-2 border-accent bg-transparent text-sm font-bold">
+                <option value="Com pauta" class="bg-surface text-on-accent">Com pauta</option>
+                <option value="Sem pauta" class="bg-surface text-on-accent">Sem pauta</option>
+                <option value="Quadriculado" class="bg-surface text-on-accent">Quadriculado</option>
+                <option value="Pontilhado" class="bg-surface text-on-accent">Pontilhado</option>
               </select>
             </div>
-            <button type="submit" id="btn-add-caderno" class="w-full bg-sangria text-cosmic font-black py-3 px-4 rounded-lg hover:opacity-90 transition uppercase tracking-wider text-sm">Adicionar Caderno</button>
+            <button type="submit" id="btn-add-caderno" class="w-full bg-primary text-on-primary font-black py-3 px-4 rounded-lg hover:opacity-90 transition uppercase tracking-wider text-sm">Adicionar Caderno</button>
           </form>
         </div>
       </div>
@@ -132,24 +132,24 @@
       <div class="lg:col-span-2 space-y-6">
         <div class="custom-card p-6 space-y-5">
           <div>
-            <label for="search-input" class="block text-xs font-black uppercase tracking-wider mb-2 text-sangria">Buscar no Armario</label>
-            <input type="search" id="search-input" oninput="handleSearch(this.value)" placeholder="Buscar materia ou caderno..." class="w-full px-4 py-3 rounded-lg border-2 border-cornflower bg-transparent outline-none text-sm font-bold">
+            <label for="search-input" class="block text-xs font-black uppercase tracking-wider mb-2 text-primary">Buscar no Armário</label>
+            <input type="search" id="search-input" oninput="handleSearch(this.value)" placeholder="Buscar matéria ou caderno..." class="w-full px-4 py-3 rounded-lg border-2 border-accent bg-transparent text-sm font-bold">
           </div>
 
           <div>
-            <h3 class="text-xs font-black uppercase tracking-wider mb-3 text-sangria">Filtrar Cadernos por Semestre</h3>
+            <h3 class="text-xs font-black uppercase tracking-wider mb-3 text-primary">Filtrar Cadernos por Semestre</h3>
             <div class="flex flex-wrap gap-2" id="semesters-nav" role="group" aria-label="Filtro por semestre">
-              <button type="button" data-semestre="todos" onclick="filterSemester('todos')" class="semester-btn px-3.5 py-2 rounded-lg bg-sangria text-cosmic font-black text-xs uppercase tracking-wider">Todos</button>
-              <button type="button" data-semestre="1 Semestre" onclick="filterSemester('1 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">1 Semestre</button>
-              <button type="button" data-semestre="2 Semestre" onclick="filterSemester('2 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">2 Semestre</button>
-              <button type="button" data-semestre="3 Semestre" onclick="filterSemester('3 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">3 Semestre</button>
-              <button type="button" data-semestre="4 Semestre" onclick="filterSemester('4 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">4 Semestre</button>
-              <button type="button" data-semestre="5 Semestre" onclick="filterSemester('5 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">5 Semestre</button>
-              <button type="button" data-semestre="6 Semestre" onclick="filterSemester('6 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">6 Semestre</button>
-              <button type="button" data-semestre="7 Semestre" onclick="filterSemester('7 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">7 Semestre</button>
-              <button type="button" data-semestre="8 Semestre" onclick="filterSemester('8 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">8 Semestre</button>
-              <button type="button" data-semestre="9 Semestre" onclick="filterSemester('9 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">9 Semestre</button>
-              <button type="button" data-semestre="10 Semestre" onclick="filterSemester('10 Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-cornflower font-bold text-xs hover:bg-cornflower transition">10 Semestre</button>
+              <button type="button" data-semestre="todos" onclick="filterSemester('todos')" class="semester-btn px-3.5 py-2 rounded-lg bg-primary text-on-primary font-black text-xs uppercase tracking-wider">Todos</button>
+              <button type="button" data-semestre="1º Semestre" onclick="filterSemester('1º Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-accent font-bold text-xs hover:bg-accent transition">1º Semestre</button>
+              <button type="button" data-semestre="2º Semestre" onclick="filterSemester('2º Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-accent font-bold text-xs hover:bg-accent transition">2º Semestre</button>
+              <button type="button" data-semestre="3º Semestre" onclick="filterSemester('3º Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-accent font-bold text-xs hover:bg-accent transition">3º Semestre</button>
+              <button type="button" data-semestre="4º Semestre" onclick="filterSemester('4º Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-accent font-bold text-xs hover:bg-accent transition">4º Semestre</button>
+              <button type="button" data-semestre="5º Semestre" onclick="filterSemester('5º Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-accent font-bold text-xs hover:bg-accent transition">5º Semestre</button>
+              <button type="button" data-semestre="6º Semestre" onclick="filterSemester('6º Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-accent font-bold text-xs hover:bg-accent transition">6º Semestre</button>
+              <button type="button" data-semestre="7º Semestre" onclick="filterSemester('7º Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-accent font-bold text-xs hover:bg-accent transition">7º Semestre</button>
+              <button type="button" data-semestre="8º Semestre" onclick="filterSemester('8º Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-accent font-bold text-xs hover:bg-accent transition">8º Semestre</button>
+              <button type="button" data-semestre="9º Semestre" onclick="filterSemester('9º Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-accent font-bold text-xs hover:bg-accent transition">9º Semestre</button>
+              <button type="button" data-semestre="10º Semestre" onclick="filterSemester('10º Semestre')" class="semester-btn px-3 py-2 rounded-lg border-2 border-accent font-bold text-xs hover:bg-accent transition">10º Semestre</button>
             </div>
           </div>
         </div>

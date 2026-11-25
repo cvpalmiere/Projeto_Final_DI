@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8">
@@ -11,12 +11,12 @@
       theme: {
         extend: {
           colors: {
-            cosmic: 'var(--text-on-primary)',
-            sangria: 'var(--brand-primary)',
-            cornflower: 'var(--brand-accent)',
-            charcoal: 'var(--text-on-accent)',
-            carddark: 'var(--bg-card)',
-            alerta: 'var(--brand-alert)'
+            'on-primary': 'var(--text-on-primary)',
+            primary: 'var(--brand-primary)',
+            accent: 'var(--brand-accent)',
+            'on-accent': 'var(--text-on-accent)',
+            surface: 'var(--bg-card)',
+            danger: 'var(--brand-danger)'
           }
         }
       }
@@ -26,22 +26,24 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <a href="#conteudo-principal" class="skip-link">Pular para o conteudo principal</a>
+  <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
 
   <header class="custom-header py-5 px-8 flex flex-wrap items-center justify-between gap-4">
     <a href="index.html" class="flex items-center gap-3">
-      <div class="w-4 h-8 bg-alerta rounded-sm"></div>
-      <h1 class="text-2xl font-black text-sangria tracking-tight">Mochila Inteligente</h1>
+      <div class="w-4 h-8 bg-danger rounded-sm"></div>
+      <h1 class="text-2xl font-black text-primary tracking-tight">Mochila Inteligente</h1>
     </a>
-    <nav aria-label="Navegacao principal" class="hidden md:flex items-center gap-6 text-sm font-bold">
-      <a href="#recursos" class="hover:text-sangria transition">Recursos</a>
-      <a href="#folhas" class="hover:text-sangria transition">Folhas</a>
+    <nav aria-label="Navegação principal" class="hidden md:flex items-center gap-6 text-sm font-bold">
+      <a href="#recursos" class="hover:text-primary transition">Recursos</a>
+      <a href="#folhas" class="hover:text-primary transition">Folhas</a>
+      <a href="#galeria" class="hover:text-primary transition">Galeria</a>
+      <a href="#contato" class="hover:text-primary transition">Contato</a>
     </nav>
     <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-cornflower" role="group" aria-label="Controles de acessibilidade">
-        <button type="button" onclick="changeFontSize(-1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Diminuir fonte">Menor</button>
-        <button type="button" onclick="changeFontSize(0)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Restaurar fonte padrao">Padrao</button>
-        <button type="button" onclick="changeFontSize(1)" class="px-2 py-1 bg-cornflower text-charcoal rounded font-bold text-xs hover:bg-sangria hover:text-cosmic transition" aria-label="Aumentar fonte">Maior</button>
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-accent" role="group" aria-label="Controles de acessibilidade">
+        <button type="button" onclick="changeFontSize(-1)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Diminuir fonte">Menor</button>
+        <button type="button" onclick="changeFontSize(0)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Restaurar fonte padrão">Padrão</button>
+        <button type="button" onclick="changeFontSize(1)" class="px-2 py-1 bg-accent text-on-accent rounded font-bold text-xs hover:bg-primary hover:text-on-primary transition" aria-label="Aumentar fonte">Maior</button>
         <button type="button" onclick="toggleTheme()" class="theme-switch" aria-label="Alternar tema">
           <span class="theme-switch-knob">
             <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -63,8 +65,8 @@
           </span>
         </button>
       </div>
-      <a href="login.html" class="px-4 py-2 rounded-lg border-2 border-cornflower font-black text-xs uppercase tracking-wider hover:bg-cornflower hover:text-charcoal transition">Entrar</a>
-      <a href="dashboard.html" class="px-4 py-2 rounded-lg bg-sangria text-cosmic font-black text-xs uppercase tracking-wider hover:opacity-90 transition">Abrir Mochila</a>
+      <a href="login.html" class="px-4 py-2 rounded-lg border-2 border-accent font-black text-xs uppercase tracking-wider hover:bg-accent hover:text-on-accent transition">Entrar</a>
+      <a href="dashboard.html" class="px-4 py-2 rounded-lg bg-primary text-on-primary font-black text-xs uppercase tracking-wider hover:opacity-90 transition">Abrir Mochila</a>
     </div>
   </header>
 
@@ -72,75 +74,129 @@
 
     <section class="p-10 rounded-2xl custom-card flex flex-col md:flex-row justify-between items-center gap-10">
       <div class="max-w-xl">
-        <span class="inline-block bg-alerta text-cosmic text-xs font-black px-3 py-1 rounded mb-4 uppercase tracking-wider">Caderno Digital Academico</span>
-        <h2 class="text-4xl md:text-6xl font-black text-sangria mb-4 leading-tight">O caderno digital que respeita a linha.</h2>
-        <p class="text-base font-medium opacity-90 mb-8">Escreva, cole notas adesivas e organize suas materias com pauta de verdade. O texto assenta na linha e nada flutua.</p>
+        <span class="inline-block bg-danger text-on-primary text-xs font-black px-3 py-1 rounded mb-4 uppercase tracking-wider">Caderno Digital Acadêmico</span>
+        <h2 class="text-4xl md:text-6xl font-black text-primary mb-4 leading-tight">O caderno digital que respeita a linha.</h2>
+        <p class="text-base font-medium opacity-90 mb-8">Escreva, cole notas adesivas e organize suas matérias com pauta de verdade. O texto assenta na linha e nada flutua.</p>
         <div class="flex flex-wrap gap-4">
-          <a href="login.html" class="bg-sangria text-cosmic font-black px-6 py-3 rounded-xl hover:opacity-90 transition uppercase tracking-wider text-sm">Comecar Agora</a>
-          <a href="dashboard.html" class="border-2 border-cornflower font-black px-6 py-3 rounded-xl hover:bg-cornflower hover:text-charcoal transition uppercase tracking-wider text-sm">Ver Painel</a>
+          <a href="login.html" class="bg-primary text-on-primary font-black px-6 py-3 rounded-xl hover:opacity-90 transition uppercase tracking-wider text-sm">Começar Agora</a>
+          <a href="dashboard.html" class="border-2 border-accent font-black px-6 py-3 rounded-xl hover:bg-accent hover:text-on-accent transition uppercase tracking-wider text-sm">Ver Painel</a>
         </div>
       </div>
       <div class="w-full md:w-96 p-6 rounded-xl notebook-cover ruled-page min-h-[240px] flex flex-col justify-between">
         <div class="flex justify-between items-center">
-          <span class="text-xs font-black uppercase bg-alerta text-cosmic px-2 py-0.5 rounded">Pauta Travada</span>
+          <span class="text-xs font-black uppercase bg-danger text-on-primary px-2 py-0.5 rounded">Pauta Travada</span>
           <div class="flex gap-1.5" aria-hidden="true">
-            <div class="w-3 h-3 rounded-full bg-alerta"></div>
-            <div class="w-3 h-3 rounded-full bg-sangria"></div>
+            <div class="w-3 h-3 rounded-full bg-danger"></div>
+            <div class="w-3 h-3 rounded-full bg-primary"></div>
           </div>
         </div>
-        <p class="text-sm font-bold opacity-95 mt-4 leading-relaxed">Estudar fica mais leve quando o texto assenta sobre a linha. Sem rolagem infinita e sem formatacao quebrada.</p>
+        <p class="text-sm font-bold opacity-95 mt-4 leading-relaxed">Estudar fica mais leve quando o texto assenta sobre a linha. Sem rolagem infinita e sem formatação quebrada.</p>
       </div>
     </section>
 
     <section id="recursos">
-      <h3 class="text-3xl font-black text-sangria mb-8">Feito para quem estuda no papel e no digital.</h3>
+      <h3 class="text-3xl font-black text-primary mb-8">Feito para quem estuda no papel e no digital.</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="custom-card p-6">
-          <span class="inline-block bg-alerta text-cosmic text-xs font-black px-2.5 py-1 rounded mb-4">01</span>
-          <h4 class="text-lg font-black mb-2">Alinhamento Milimetrico</h4>
-          <p class="text-sm opacity-85">Espaco entre linhas fixo e texto sempre sobre a linha de base em qualquer tamanho de fonte.</p>
+          <span class="inline-block bg-danger text-on-primary text-xs font-black px-2.5 py-1 rounded mb-4">01</span>
+          <h4 class="text-lg font-black mb-2">Alinhamento Milimétrico</h4>
+          <p class="text-sm opacity-85">Espaço entre linhas fixo e texto sempre sobre a linha de base em qualquer tamanho de fonte.</p>
         </div>
         <div class="custom-card p-6">
-          <span class="inline-block bg-alerta text-cosmic text-xs font-black px-2.5 py-1 rounded mb-4">02</span>
-          <h4 class="text-lg font-black mb-2">Notas Sem Colisao</h4>
-          <p class="text-sm opacity-85">Anotacoes e imagens encaixam na pauta e o texto recua automaticamente ao redor.</p>
+          <span class="inline-block bg-danger text-on-primary text-xs font-black px-2.5 py-1 rounded mb-4">02</span>
+          <h4 class="text-lg font-black mb-2">Notas Sem Colisão</h4>
+          <p class="text-sm opacity-85">Anotações e imagens encaixam na pauta e o texto recua automaticamente ao redor.</p>
         </div>
         <div class="custom-card p-6">
-          <span class="inline-block bg-alerta text-cosmic text-xs font-black px-2.5 py-1 rounded mb-4">03</span>
-          <h4 class="text-lg font-black mb-2">Paginas de Verdade</h4>
-          <p class="text-sm opacity-85">Navegue pagina a pagina com divisao clara por semestres e materias do curso.</p>
+          <span class="inline-block bg-danger text-on-primary text-xs font-black px-2.5 py-1 rounded mb-4">03</span>
+          <h4 class="text-lg font-black mb-2">Páginas de Verdade</h4>
+          <p class="text-sm opacity-85">Navegue página a página com divisão clara por semestres e matérias do curso.</p>
         </div>
         <div class="custom-card p-6">
-          <span class="inline-block bg-alerta text-cosmic text-xs font-black px-2.5 py-1 rounded mb-4">04</span>
-          <h4 class="text-lg font-black mb-2">Exportacao Limpa</h4>
-          <p class="text-sm opacity-85">Organize seus cadernos com contraste de alto nivel pronto para leitura e impressao.</p>
+          <span class="inline-block bg-danger text-on-primary text-xs font-black px-2.5 py-1 rounded mb-4">04</span>
+          <h4 class="text-lg font-black mb-2">Exportação Limpa</h4>
+          <p class="text-sm opacity-85">Organize seus cadernos com contraste de alto nível pronto para leitura e impressão.</p>
         </div>
       </div>
     </section>
 
     <section id="folhas">
-      <h3 class="text-3xl font-black text-sangria mb-8">Escolha a folha para cada materia.</h3>
+      <h3 class="text-3xl font-black text-primary mb-8">Escolha a folha para cada matéria.</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="custom-card p-5 flex flex-col justify-between">
-          <div class="h-36 rounded-lg border-2 border-cornflower ruled-page mb-4" aria-hidden="true"></div>
+          <div class="h-36 rounded-lg border-2 border-accent ruled-page mb-4" aria-hidden="true"></div>
           <h4 class="font-black text-base">Com pauta</h4>
-          <p class="text-xs opacity-80 mt-1">Linhas horizontais tradicionais para anotacoes corridas.</p>
+          <p class="text-xs opacity-80 mt-1">Linhas horizontais tradicionais para anotações corridas.</p>
         </div>
         <div class="custom-card p-5 flex flex-col justify-between">
-          <div class="h-36 rounded-lg border-2 border-cornflower mb-4" aria-hidden="true"></div>
+          <div class="h-36 rounded-lg border-2 border-accent mb-4" aria-hidden="true"></div>
           <h4 class="font-black text-base">Sem pauta</h4>
           <p class="text-xs opacity-80 mt-1">Folha lisa para esquemas livres e mapas mentais.</p>
         </div>
         <div class="custom-card p-5 flex flex-col justify-between">
-          <div class="h-36 rounded-lg border-2 border-cornflower grid-page mb-4" aria-hidden="true"></div>
+          <div class="h-36 rounded-lg border-2 border-accent grid-page mb-4" aria-hidden="true"></div>
           <h4 class="font-black text-base">Quadriculado</h4>
-          <p class="text-xs opacity-80 mt-1">Ideal para graficos, tabelas e calculos exatos.</p>
+          <p class="text-xs opacity-80 mt-1">Ideal para gráficos, tabelas e cálculos exatos.</p>
         </div>
         <div class="custom-card p-5 flex flex-col justify-between">
-          <div class="h-36 rounded-lg border-2 border-cornflower dotted-page mb-4" aria-hidden="true"></div>
+          <div class="h-36 rounded-lg border-2 border-accent dotted-page mb-4" aria-hidden="true"></div>
           <h4 class="font-black text-base">Pontilhado</h4>
           <p class="text-xs opacity-80 mt-1">Guia discreta para desenhar diagramas e planejar.</p>
         </div>
+      </div>
+    </section>
+
+    <section id="galeria" aria-labelledby="galeria-titulo">
+      <h3 id="galeria-titulo" class="text-3xl font-black text-primary mb-8">Estude do seu jeito, no papel e no digital.</h3>
+      <div id="carousel" class="carousel custom-card" role="region" aria-roledescription="carrossel" aria-label="Galeria de cadernos">
+        <div class="carousel-stage">
+          <div class="carousel-viewport" aria-live="polite">
+          <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="Foto 1 de 3">
+            <img src="imagens/estudo1.jpg" width="1025" height="729" alt="Caderno de espiral aberto sobre a mesa, visto de cima em ângulo, com páginas pautadas cheias de anotações escritas à mão em rosa e preto, setas e trechos destacados, e dois objetos coloridos com carinhas desenhadas ao fundo.">
+            <figcaption class="carousel-caption">Anotações coloridas, setas e destaques: organização que dá gosto de estudar.</figcaption>
+          </figure>
+          <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="Foto 2 de 3" hidden>
+            <img src="imagens/estudo2.jpg" width="1179" height="794" alt="Caderno de espiral aberto com páginas pautadas cheias de anotações à mão em azul e três post its verdes colados sobre o texto.">
+            <figcaption class="carousel-caption">Post its sobre as anotações, como no editor da Mochila Inteligente.</figcaption>
+          </figure>
+          <figure class="carousel-slide" role="group" aria-roledescription="slide" aria-label="Foto 3 de 3" hidden>
+            <img src="imagens/estudo3.jpg" width="1179" height="860" alt="Caderno de capa dura aberto com as duas páginas pautadas em branco, três canetas hidrográficas nas cores azul claro, azul escuro e preta sobre a página da esquerda e uma etiqueta azul na lateral.">
+            <figcaption class="carousel-caption">Folha com pauta em branco, pronta para receber as anotações.</figcaption>
+          </figure>
+          </div>
+          <button type="button" id="carousel-prev" class="carousel-arrow carousel-arrow-prev" onclick="moveCarousel(-1)" aria-label="Foto anterior"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15,5 8,12 15,19"></polyline></svg></button>
+          <button type="button" id="carousel-next" class="carousel-arrow carousel-arrow-next" onclick="moveCarousel(1)" aria-label="Próxima foto"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9,5 16,12 9,19"></polyline></svg></button>
+        </div>
+        <div class="carousel-dots" role="group" aria-label="Escolher foto">
+            <button type="button" class="carousel-dot" onclick="goToSlide(0)" aria-label="Ir para a foto 1" aria-current="true"></button>
+            <button type="button" class="carousel-dot" onclick="goToSlide(1)" aria-label="Ir para a foto 2" aria-current="false"></button>
+            <button type="button" class="carousel-dot" onclick="goToSlide(2)" aria-label="Ir para a foto 3" aria-current="false"></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" aria-labelledby="contato-titulo">
+      <h3 id="contato-titulo" class="text-3xl font-black text-primary mb-8">Envie sua sugestão.</h3>
+      <div class="custom-card p-8 max-w-2xl">
+        <p class="text-sm opacity-85 mb-6">Conte o que podemos melhorar na Mochila Inteligente. Todos os campos são obrigatórios.</p>
+        <form id="form-contato" onsubmit="handleContactSubmit(event)" novalidate class="space-y-5">
+          <div>
+            <label for="contato-nome" class="block text-xs font-black uppercase tracking-wider mb-2">Nome</label>
+            <input type="text" id="contato-nome" name="nome" autocomplete="name" maxlength="80" placeholder="Seu nome completo" aria-describedby="erro-nome" aria-invalid="false" class="w-full px-4 py-3 rounded-lg border-2 border-accent bg-transparent text-sm font-bold">
+            <p id="erro-nome" class="field-error" role="alert"></p>
+          </div>
+          <div>
+            <label for="contato-telefone" class="block text-xs font-black uppercase tracking-wider mb-2">Telefone</label>
+            <input type="tel" id="contato-telefone" name="telefone" inputmode="tel" autocomplete="tel" maxlength="15" oninput="maskPhone(this)" placeholder="(11) 91234 5678" aria-describedby="erro-telefone" aria-invalid="false" class="w-full px-4 py-3 rounded-lg border-2 border-accent bg-transparent text-sm font-bold">
+            <p id="erro-telefone" class="field-error" role="alert"></p>
+          </div>
+          <div>
+            <label for="contato-sugestao" class="block text-xs font-black uppercase tracking-wider mb-2">Sugestão</label>
+            <textarea id="contato-sugestao" name="sugestao" rows="5" maxlength="500" placeholder="Escreva sua ideia ou o que podemos melhorar" aria-describedby="erro-sugestao" aria-invalid="false" class="w-full px-4 py-3 rounded-lg border-2 border-accent bg-transparent text-sm font-bold"></textarea>
+            <p id="erro-sugestao" class="field-error" role="alert"></p>
+          </div>
+          <button type="submit" class="w-full bg-primary text-on-primary font-black py-3.5 px-4 rounded-lg hover:opacity-90 transition uppercase tracking-wider text-sm">Enviar Sugestão</button>
+        </form>
       </div>
     </section>
 
